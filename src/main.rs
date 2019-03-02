@@ -5,8 +5,10 @@ extern crate serde_derive;
 extern crate graphql_client;
 use graphql_client::*;
 
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::prelude::*;
+use std::iter::FromIterator;
 use std::sync::mpsc;
 use std::thread;
 mod repository;
@@ -15,10 +17,44 @@ use repository::Repository;
 use repository::ToJavascript;
 use repository::Topic;
 
-use std::collections::HashMap;
-use std::iter::FromIterator;
-
 type URI = String;
+
+const GITHUB_API_URL: &str = "https://api.github.com/graphql";
+const GITHUB_AUTH_TOKEN: &str = "11cd3b0cfcae28d4f8708e7c8ff5d3a1d15aed9c";
+const NUM_LANGUAGES: i64 = 10;
+const NUM_REPOSITORIES_PER_REQUEST: i64 = 15;
+const MIN_NUM_ISSUES: i64 = 10;
+const NUM_REPOSITORIES: usize = 20;
+const NUM_RETRIES: i64 = 100;
+const LABELS: [&str; 27] = [
+    "help wanted",
+    "beginner",
+    "beginners",
+    "easy",
+    "Good First Bug",
+    "starter",
+    "status: ideal-for-contribution",
+    "low-hanging-fruit",
+    "E-easy",
+    "newbie",
+    "easy fix",
+    "easy-fix",
+    "beginner friendly",
+    "easy-pick",
+    "Good for New Contributors",
+    "first-timers-only",
+    "contribution-starter",
+    "good for beginner",
+    "starter bug",
+    "good-for-beginner",
+    "your-first-pr",
+    "first timers only",
+    "first time contributor",
+    "up-for-grabs",
+    "good first issue",
+    "Contribute: Good First Issue",
+    "D - easy",
+];
 
 #[derive(GraphQLQuery)]
 #[graphql(
@@ -115,7 +151,7 @@ impl Repositories {
             .collect();
         label_counts.sort_by(|&(_, a), &(_, b)| b.cmp(&a));
 
-        if repo.issues.total_count < 10 {
+        if repo.issues.total_count < MIN_NUM_ISSUES {
             println!("Not enough issues");
             return None;
         }
@@ -153,42 +189,6 @@ impl Repositories {
         search_object.repositories.append(&mut repositories);
     }
 }
-
-const GITHUB_API_URL: &str = "https://api.github.com/graphql";
-const GITHUB_AUTH_TOKEN: &str = "11cd3b0cfcae28d4f8708e7c8ff5d3a1d15aed9c";
-const NUM_LANGUAGES: i64 = 10;
-const NUM_REPOSITORIES_PER_REQUEST: i64 = 15;
-const NUM_REPOSITORIES: usize = 20;
-const NUM_RETRIES: i64 = 100;
-const LABELS: [&str; 27] = [
-    "help wanted",
-    "beginner",
-    "beginners",
-    "easy",
-    "Good First Bug",
-    "starter",
-    "status: ideal-for-contribution",
-    "low-hanging-fruit",
-    "E-easy",
-    "newbie",
-    "easy fix",
-    "easy-fix",
-    "beginner friendly",
-    "easy-pick",
-    "Good for New Contributors",
-    "first-timers-only",
-    "contribution-starter",
-    "good for beginner",
-    "starter bug",
-    "good-for-beginner",
-    "your-first-pr",
-    "first timers only",
-    "first time contributor",
-    "up-for-grabs",
-    "good first issue",
-    "Contribute: Good First Issue",
-    "D - easy",
-];
 
 struct SearchObject {
     language: String,
@@ -247,7 +247,7 @@ fn get_all_repositories(mut language: Language) -> String {
     let mut len = 0;
     while len < NUM_RETRIES && search_object.repositories.len() < NUM_REPOSITORIES {
         get_repositories(&mut search_object);
-        len = len + 1; //search_object.repositories.len();
+        len = len + 1;
     }
     language.repositories = search_object.repositories;
     language.to_javascript()
