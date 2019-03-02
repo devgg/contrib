@@ -1,0 +1,78 @@
+.App-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.App-sidebar {
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  background: #34495e;
+  color: white;
+  animation-duration: 10s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  transition: left 0.5s, right 0.5s;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px 30px;
+}
+
+.App-sidebar-left {
+  left: 0;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%);
+  animation-name: polygons-left;
+}
+
+.App-sidebar-right {
+  right: 0;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+  animation-name: polygons-right;
+}
+
+@keyframes polygons-left {
+  100% {
+    clip-path: polygon(0% 0, 90% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes polygons-right {
+  100% {
+    clip-path: polygon(0% 0, 100% 0, 100% 100%, 10% 100%);
+  }
+}
+
+.App-container.out > .App-sidebar-left {
+  left: -300px;
+  transition-timing-function: ease-in;
+}
+
+.App-container.out > .App-sidebar-right {
+  right: -300px;
+  transition-timing-function: ease-in;
+}
+
+.App-container.in > .App-sidebar-left {
+  left: 0;
+  transition-timing-function: ease-out;
+}
+
+.App-container.in > .App-sidebar-right {
+  right: 0;
+  transition-timing-function: ease-out;
+}
+
+.App-main {
+  padding-left: 300px;
+  padding-right: 300px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: white;
+}
+
+.App-social {
+  display: flex;
+}

@@ -1,0 +1,55 @@
+query Repositories($num_results: Int!, $query: String!, $cursor: String, $labels: [String!]!, $num_languages: Int!) {
+  search(first: $num_results, query: $query, after: $cursor, type: REPOSITORY) {
+    repositoryCount
+    pageInfo {
+      endCursor
+    }
+    nodes {
+      __typename
+      ... on Repository {
+        nameWithOwner
+        url
+        description
+        forkCount
+        issues(first: 20, labels: $labels, states: [OPEN]) {
+          totalCount
+          nodes {
+            labels(first: 10) {
+              nodes {
+                name
+              }
+            }
+          }
+        }
+        languages(first: $num_languages) {
+          nodes {
+            name
+          }
+        }
+        #createdAt
+        #updatedAt
+        #pushedAt
+        pullRequests(states: [OPEN]) {
+          totalCount
+        }
+        stargazers {
+          totalCount
+        }
+        repositoryTopics(first: 5) {
+          nodes {
+            url
+            topic {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+  rateLimit {
+    limit
+    cost
+    remaining
+    #resetAt
+  }
+}

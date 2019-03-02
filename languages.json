@@ -1,0 +1,23 @@
+[
+  {
+    "display_name": "C++",
+    "search_term": "cpp",
+    "description":
+      "C++ is a general-purpose programming language. It has imperative, object-oriented and generic programming features, while also providing facilities for low-level memory manipulation.",
+    "repositories": []
+  },
+  {
+    "display_name": "Java",
+    "search_term": "java",
+    "description":
+      "Java is a general-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically designed to have as few implementation dependencies as possible. It is intended to let application developers 'write once, run anywhere' (WORA), meaning that compiled Java code can run on all platforms that support Java without the need for recompilation.",
+    "repositories": []
+  },
+  {
+    "display_name": "Rust",
+    "search_term": "rust",
+    "description":
+      "Rust is a multi-paradigm systems programming language focused on safety, especially safe concurrency. rust is syntactically similar to c++, but is designed to provide better memory safety while maintaining high performance.",
+    "repositories": []
+  }
+]

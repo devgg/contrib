@@ -1,0 +1,53 @@
+.Repository-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.Stats-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.Stats-star {
+  color: #ffd700;
+}
+
+.Stats-issue {
+  color: grey;
+}
+
+.Description-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.Description-link {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.Description-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+.Repository-topics {
+  display: flex;
+  overflow: hidden;
+}
+
+.ui.label.Repository-topic {
+  background-color: #f1f8ff;
+  color: #0366d6;
+  white-space: nowrap;
+  flex-wrap: wrap;
+}
+
+.ui.label.Repository-topic:hover {
+  background-color: #def;
+  color: #0366d6;
+}
