@@ -1,3 +1,4 @@
 /target
 **/*.rs.bk
 frontend/node_modules
+frontend/src/generated
