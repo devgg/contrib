@@ -7,9 +7,9 @@ use graphql_client::*;
 
 use std::fs::File;
 use std::io::prelude::*;
-mod js_util;
+use std::sync::mpsc;
+use std::thread;
 mod repository;
-use repository::to_field;
 use repository::Language;
 use repository::Repository;
 use repository::ToJavascript;
@@ -115,6 +115,11 @@ impl Repositories {
             .collect();
         label_counts.sort_by(|&(_, a), &(_, b)| b.cmp(&a));
 
+        if repo.issues.total_count < 10 {
+            println!("Not enough issues");
+            return None;
+        }
+
         Some(Repository {
             name_with_owner: repo.name_with_owner,
             url: repo.url,
@@ -152,6 +157,9 @@ impl Repositories {
 const GITHUB_API_URL: &str = "https://api.github.com/graphql";
 const GITHUB_AUTH_TOKEN: &str = "11cd3b0cfcae28d4f8708e7c8ff5d3a1d15aed9c";
 const NUM_LANGUAGES: i64 = 10;
+const NUM_REPOSITORIES_PER_REQUEST: i64 = 15;
+const NUM_REPOSITORIES: usize = 20;
+const NUM_RETRIES: i64 = 100;
 const LABELS: [&str; 27] = [
     "help wanted",
     "beginner",
@@ -189,7 +197,11 @@ struct SearchObject {
 }
 
 fn get_repositories(mut search_object: &mut SearchObject) {
-    let q = Repositories::create_query(10, &search_object.language, search_object.cursor.clone());
+    let q = Repositories::create_query(
+        NUM_REPOSITORIES_PER_REQUEST,
+        &search_object.language,
+        search_object.cursor.clone(),
+    );
     let client = reqwest::Client::new();
 
     let mut res = match client
@@ -226,36 +238,44 @@ fn get_repositories(mut search_object: &mut SearchObject) {
     Repositories::parse_response(response_data, &mut search_object);
 }
 
+fn get_all_repositories(mut language: Language) -> String {
+    let mut search_object = SearchObject {
+        cursor: None,
+        language: language.search_term.clone(),
+        repositories: vec![],
+    };
+    let mut len = 0;
+    while len < NUM_RETRIES && search_object.repositories.len() < NUM_REPOSITORIES {
+        get_repositories(&mut search_object);
+        len = len + 1; //search_object.repositories.len();
+    }
+    language.repositories = search_object.repositories;
+    language.to_javascript()
+}
+
 fn main() {
     let mut f = File::open("languages.json").unwrap();
-    let mut buf = String::new();
-    f.read_to_string(&mut buf).unwrap();
-    let languages: Vec<Language> = serde_json::from_str(&buf).unwrap();
+    let mut buffer = String::new();
+    f.read_to_string(&mut buffer).unwrap();
+    let languages: Vec<Language> = serde_json::from_str(&buffer).unwrap();
+
+    let (tx, rx) = mpsc::channel();
+    languages.into_iter().for_each(|language| {
+        let tx = mpsc::Sender::clone(&tx);
+        thread::spawn(move || {
+            let repositories = get_all_repositories(language);
+            tx.send(repositories).unwrap();
+            //drop(tx);
+        });
+    });
+    drop(tx);
+
+    let mut result = vec![];
+    for language in rx {
+        result.push(language);
+    }
 
     let mut buffer = File::create("frontend/src/generated/data.js").expect("");
-
-    let mut result: Vec<String> = vec![];
-    for language in languages.iter() {
-        let mut search_object = SearchObject {
-            cursor: None,
-            language: language.search_term.clone(),
-            repositories: vec![],
-        };
-        let mut len = 0;
-        while len < 10 {
-            get_repositories(&mut search_object);
-            len = len + 1; //search_object.repositories.len();
-        }
-        result.push(
-            Language {
-                display_name: language.display_name.clone(),
-                search_term: language.search_term.clone(),
-                description: language.description.clone(),
-                repositories: search_object.repositories,
-            }
-            .to_javascript(),
-        );
-    }
     match write!(buffer, "export default [\n{}\n];", result.join(",\n")) {
         Ok(_) => return,
         Err(e) => {
