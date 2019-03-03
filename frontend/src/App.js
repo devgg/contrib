@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Switch, HashRouter as Router, Route } from "react-router-dom";
+import {
+  Switch,
+  HashRouter as Router,
+  Route,
+  Redirect
+} from "react-router-dom";
 import "./App.css";
 import AppContainer from "./AppContainer.js";
 
@@ -9,7 +14,7 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path="/language/:language" component={AppContainer} />
-          <Route path="" render={() => <h1>404</h1>} />
+          <Route path="" render={() => <Redirect to="/language/cpp" />} />
         </Switch>
       </Router>
     );
