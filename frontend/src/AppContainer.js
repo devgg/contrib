@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Dropdown, Icon, Image } from "semantic-ui-react";
+import { Button, Dropdown, Icon, Image, Segment } from "semantic-ui-react";
 import DataTable from "./DataTable.js";
 import data from "./generated/data.js";
 
@@ -16,6 +16,7 @@ class Navigation extends Component {
         fluid
         search
         selection
+        defaultValue={this.props.default}
         options={this.props.options}
         onChange={this.props.onLanguageChange}
       />
@@ -23,38 +24,37 @@ class Navigation extends Component {
   }
 }
 
+class SocialButton extends Component {
+  render() {
+    return (
+      <Button animated basic>
+        <Button.Content visible>
+          <Icon name={this.props.icon} />
+        </Button.Content>
+        <Button.Content hidden>
+          <Icon name="arrow right" />
+        </Button.Content>
+      </Button>
+    );
+  }
+}
+
 class LanguageDescription extends Component {
   render() {
     return (
-      <div>
-        <Image src={this.props.data.image} />
+      <div className="LanguageDescription-container">
+        <Image
+          className="LanguageDescription-image"
+          src={this.props.data.image}
+        />
         <h1>{this.props.data.display_name}</h1>
-        <div>{this.props.data.description}</div>
+        <div className="LanguageDescription-text">
+          {this.props.data.description}
+        </div>
         <div className="App-social">
-          <Button animated>
-            <Button.Content visible>
-              <Icon name="github" />
-            </Button.Content>
-            <Button.Content hidden>
-              <Icon name="arrow right" />
-            </Button.Content>
-          </Button>
-          <Button animated>
-            <Button.Content visible>
-              <Icon name="stack overflow" />
-            </Button.Content>
-            <Button.Content hidden>
-              <Icon name="arrow right" />
-            </Button.Content>
-          </Button>
-          <Button animated>
-            <Button.Content visible>
-              <Icon name="wikipedia w" />
-            </Button.Content>
-            <Button.Content hidden>
-              <Icon name="arrow right" />
-            </Button.Content>
-          </Button>
+          <SocialButton icon="github" />
+          <SocialButton icon="stack overflow" />
+          <SocialButton icon="wikipedia w" />
         </div>
       </div>
     );
@@ -101,18 +101,17 @@ class AppContainer extends Component {
       data[this.index.language[this.props.match.params.language]];
     return (
       <div className="App-container" ref={this.myRef}>
-        <Sidebar cls={"App-sidebar-left"}>
+        <Segment className="App-controls">
           <Navigation
             options={this.options}
+            default={language.search_term}
             onLanguageChange={this.handleLanguageChange}
           />
-        </Sidebar>
+          <LanguageDescription data={language} />
+        </Segment>
         <div className="App-main">
           <DataTable data={language.repositories} />
         </div>
-        <Sidebar cls={"App-sidebar-right"}>
-          <LanguageDescription data={language} />
-        </Sidebar>
       </div>
     );
   }

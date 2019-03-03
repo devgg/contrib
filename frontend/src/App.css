@@ -1,7 +1,8 @@
 .App-container {
   min-height: 100vh;
-  display: flex;
-  flex-direction: row;
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .App-sidebar {
@@ -18,6 +19,21 @@
   align-items: center;
   flex-direction: column;
   padding: 30px 30px;
+}
+
+.App-controls-container {
+  position: relative;
+  height: 100%;
+  width: 300px;
+}
+
+.ui.segment.App-controls {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 20px);
+  position: fixed;
+  margin: 10px;
+  width: 300px;
 }
 
 .App-sidebar-left {
@@ -65,14 +81,32 @@
 }
 
 .App-main {
-  padding-left: 300px;
-  padding-right: 300px;
+  /* padding-left: 300px;
+  padding-right: 300px;*/
+  width: 700px;
   display: flex;
   justify-content: center;
-  width: 100%;
+  margin-left: 340px;
   background: white;
+  padding: 10px;
 }
 
 .App-social {
   display: flex;
+}
+
+.LanguageDescription-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.LanguageDescription-image {
+  height: 240px;
+  margin: 10px 0;
+}
+
+.LanguageDescription-text {
+  flex-grow: 1;
 }

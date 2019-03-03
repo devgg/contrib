@@ -123,9 +123,6 @@ class Description extends Component {
   }
 }
 
-//<Label as="a" color="orange" ribbon="right">
-//  Specs
-//</Label>
 class Repository extends Component {
   render() {
     return (
