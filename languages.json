@@ -2,6 +2,8 @@
   {
     "display_name": "C++",
     "search_term": "cpp",
+    "image":
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png",
     "description":
       "C++ is a general-purpose programming language. It has imperative, object-oriented and generic programming features, while also providing facilities for low-level memory manipulation.",
     "repositories": []
@@ -9,6 +11,8 @@
   {
     "display_name": "Java",
     "search_term": "java",
+    "image":
+      "https://www.softexia.com/wp-content/uploads/2017/04/Java-logo.png",
     "description":
       "Java is a general-purpose computer-programming language that is concurrent, class-based, object-oriented, and specifically designed to have as few implementation dependencies as possible. It is intended to let application developers 'write once, run anywhere' (WORA), meaning that compiled Java code can run on all platforms that support Java without the need for recompilation.",
     "repositories": []
@@ -16,6 +20,8 @@
   {
     "display_name": "Rust",
     "search_term": "rust",
+    "image":
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/1920px-Rust_programming_language_black_logo.svg.png",
     "description":
       "Rust is a multi-paradigm systems programming language focused on safety, especially safe concurrency. rust is syntactically similar to c++, but is designed to provide better memory safety while maintaining high performance.",
     "repositories": []

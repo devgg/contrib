@@ -7,16 +7,25 @@ pub struct Topic {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Label {
+    pub name: String,
+    pub count: i64,
+    pub color: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Repository {
     pub name_with_owner: String,
     pub url: String,
     pub description: String,
+    pub homepage_url: String,
+    pub avatar_url: String,
     pub num_forks: i64,
     pub num_issues: i64,
     pub num_pull_requests: i64,
     pub num_stars: i64,
     pub topics: Vec<Topic>,
-    pub label_counts: Vec<(String, i64)>,
+    pub labels: Vec<Label>,
     pub issues: Vec<Vec<String>>,
     pub languages: Vec<String>,
 }
@@ -25,6 +34,7 @@ pub struct Repository {
 pub struct Language {
     pub display_name: String,
     pub search_term: String,
+    pub image: String,
     pub description: String,
     pub repositories: Vec<Repository>,
 }
@@ -34,7 +44,7 @@ impl fmt::Display for Repository {
         write!(
             f,
             "name with owner: {}\nnum_stars: {}\nnum_issues: {}\ndescription: {}\nlabel_counts: {:#?}\n",
-            self.name_with_owner, self.num_stars, self.num_issues, self.description, self.label_counts
+            self.name_with_owner, self.num_stars, self.num_issues, self.description, self.labels
         )
     }
 }
@@ -91,6 +101,19 @@ impl ToJavascript for Topic {
     }
 }
 
+impl ToJavascript for Label {
+    fn to_javascript(&self) -> String {
+        to_object(
+            &[
+                to_field("name", &self.name),
+                to_field("count", &self.count),
+                to_field("color", &self.color),
+            ]
+            .join(","),
+        )
+    }
+}
+
 impl ToJavascript for Repository {
     fn to_javascript(&self) -> String {
         to_object(
@@ -98,12 +121,14 @@ impl ToJavascript for Repository {
                 to_field("name_with_owner", &self.name_with_owner),
                 to_field("url", &self.url),
                 to_field("description", &self.description),
+                to_field("homepage_url", &self.homepage_url),
+                to_field("avatar_url", &self.avatar_url),
                 to_field("num_forks", &self.num_forks),
                 to_field("num_issues", &self.num_issues),
                 to_field("num_pull_requests", &self.num_pull_requests),
                 to_field("num_stars", &self.num_stars),
                 to_field("topics", &self.topics),
-                to_field("label_counts", &self.label_counts),
+                to_field("labels", &self.labels),
                 to_field("issues", &self.issues),
                 to_field("languages", &self.languages),
             ]
@@ -118,6 +143,7 @@ impl ToJavascript for Language {
             &[
                 to_field("display_name", &self.display_name),
                 to_field("search_term", &self.search_term),
+                to_field("image", &self.image),
                 to_field("description", &self.description),
                 to_field("repositories", &self.repositories),
             ]

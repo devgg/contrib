@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import { Button, Dropdown, Sticky, Icon, Image } from "semantic-ui-react";
+import { Button, Dropdown, Icon, Image } from "semantic-ui-react";
 import DataTable from "./DataTable.js";
 import data from "./generated/data.js";
 
@@ -28,7 +27,7 @@ class LanguageDescription extends Component {
   render() {
     return (
       <div>
-        <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png" />
+        <Image src={this.props.data.image} />
         <h1>{this.props.data.display_name}</h1>
         <div>{this.props.data.description}</div>
         <div className="App-social">
@@ -90,7 +89,7 @@ class AppContainer extends Component {
     for (let i = 0; i < data.length; ++i) {
       this.index.language[data[i].search_term] = i;
     }
-    console.log(this.options);
+    this.myRef = React.createRef();
   }
 
   handleLanguageChange = (e, { value }) => {
@@ -101,7 +100,7 @@ class AppContainer extends Component {
     const language =
       data[this.index.language[this.props.match.params.language]];
     return (
-      <div className="App-container" ref={this.handleContextRef}>
+      <div className="App-container" ref={this.myRef}>
         <Sidebar cls={"App-sidebar-left"}>
           <Navigation
             options={this.options}

@@ -10,13 +10,24 @@ query Repositories($num_results: Int!, $query: String!, $cursor: String, $labels
         nameWithOwner
         url
         description
+        homepageUrl
+        owner {
+          __typename
+          ... on User {
+            avatarUrl
+          }
+          ... on Organization {
+            avatarUrl
+          }
+        }
         forkCount
-        issues(first: 20, labels: $labels, states: [OPEN]) {
+        issues(first: 100, labels: $labels, states: [OPEN]) {
           totalCount
           nodes {
             labels(first: 10) {
               nodes {
                 name
+                color
               }
             }
           }

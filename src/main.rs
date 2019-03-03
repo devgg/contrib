@@ -15,12 +15,21 @@ use std::iter::FromIterator;
 use std::sync::mpsc;
 use std::thread;
 mod repository;
+use repository::Label;
 use repository::Language;
 use repository::Repository;
 use repository::ToJavascript;
 use repository::Topic;
 
 type URI = String;
+
+#[derive(GraphQLQuery)]
+#[graphql(
+    schema_path = "src/schema.graphql",
+    query_path = "src/repositories.graphql",
+    response_derives = "Debug"
+)]
+pub struct Repositories;
 
 const GITHUB_API_URL: &str = "https://api.github.com/graphql";
 const GITHUB_AUTH_TOKEN: &str = "11cd3b0cfcae28d4f8708e7c8ff5d3a1d15aed9c";
@@ -58,14 +67,6 @@ const LABELS: [&str; 27] = [
     "Contribute: Good First Issue",
     "D - easy",
 ];
-
-#[derive(GraphQLQuery)]
-#[graphql(
-    schema_path = "src/schema.graphql",
-    query_path = "src/repositories.graphql",
-    response_derives = "Debug"
-)]
-pub struct Repositories;
 
 impl Repositories {
     fn create_query(
@@ -120,7 +121,7 @@ impl Repositories {
                     .nodes
                     .unwrap_or_default()
                     .into_iter()
-                    .map(|label| label.expect("").name)
+                    .map(|label| label.expect(""))
                     .collect::<Vec<_>>()
             })
             .collect::<Vec<_>>();
@@ -139,36 +140,58 @@ impl Repositories {
             })
             .collect::<Vec<_>>();
 
-        let mut label_counts: HashMap<String, i64> =
-            HashMap::from_iter(LABELS.iter().cloned().map(|label| (String::from(label), 0)));
+        let mut labels: HashMap<String, Label> =
+            HashMap::from_iter(LABELS.iter().cloned().map(|label| {
+                (
+                    String::from(label),
+                    Label {
+                        name: String::from(label),
+                        count: 0,
+                        color: String::new(),
+                    },
+                )
+            }));
 
         for issue in issues.iter() {
             for label in issue.iter() {
-                label_counts.entry(label.clone()).and_modify(|l| *l += 1);
+                labels.entry(label.name.clone()).and_modify(|l| {
+                    (*l).count += 1;
+                    (*l).color = label.color.clone();
+                });
             }
         }
 
-        let mut label_counts: Vec<(String, i64)> = label_counts
+        let mut labels: Vec<Label> = labels
             .into_iter()
-            .filter(|label_count| label_count.1 > 0)
+            .filter(|(_, v)| v.count > 0)
+            .map(|(_, v)| v)
             .collect();
-        label_counts.sort_by(|&(_, a), &(_, b)| b.cmp(&a));
+        labels.sort_by(|a, b| b.count.cmp(&a.count));
 
         if repo.issues.total_count < MIN_NUM_ISSUES {
             debug!("Not enough issues");
             return None;
         }
 
+        let avatar_url = match repo.owner.on {
+            repositories::RepositoriesSearchNodesOnRepositoryOwnerOn::User(user) => user.avatar_url,
+            repositories::RepositoriesSearchNodesOnRepositoryOwnerOn::Organization(
+                organization,
+            ) => organization.avatar_url,
+        };
+
         Some(Repository {
             name_with_owner: repo.name_with_owner,
             url: repo.url,
             description: repo.description.expect(""),
+            homepage_url: repo.homepage_url.unwrap_or_default(),
+            avatar_url,
             num_forks: repo.fork_count,
             num_issues: repo.issues.total_count,
             num_pull_requests: repo.pull_requests.total_count,
             num_stars: repo.stargazers.total_count,
             topics,
-            label_counts,
+            labels,
             issues: vec![],
             languages,
         })

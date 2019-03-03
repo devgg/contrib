@@ -7,7 +7,7 @@ class DataTable extends Component {
     return (
       <div>
         {this.props.data.filter(row => row.num_issues >= 1).map(row => {
-          return <Repository {...row} />;
+          return <Repository key={row.name_with_owner} {...row} />;
         })}
       </div>
     );
