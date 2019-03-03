@@ -1,13 +1,13 @@
 {
-  "main.css": "/static/css/main.1585d15a.chunk.css",
-  "main.js": "/static/js/main.05b0baf9.chunk.js",
-  "main.js.map": "/static/js/main.05b0baf9.chunk.js.map",
-  "runtime~main.js": "/static/js/runtime~main.fdfcfda2.js",
-  "runtime~main.js.map": "/static/js/runtime~main.fdfcfda2.js.map",
-  "static/js/2.cf46bf96.chunk.js": "/static/js/2.cf46bf96.chunk.js",
-  "static/js/2.cf46bf96.chunk.js.map": "/static/js/2.cf46bf96.chunk.js.map",
-  "index.html": "/index.html",
-  "precache-manifest.5b025b1439210a6f0d9cf765b7115c94.js": "/precache-manifest.5b025b1439210a6f0d9cf765b7115c94.js",
-  "service-worker.js": "/service-worker.js",
-  "static/css/main.1585d15a.chunk.css.map": "/static/css/main.1585d15a.chunk.css.map"
+  "main.css": "/gh-issues/static/css/main.1585d15a.chunk.css",
+  "main.js": "/gh-issues/static/js/main.a114e33e.chunk.js",
+  "main.js.map": "/gh-issues/static/js/main.a114e33e.chunk.js.map",
+  "runtime~main.js": "/gh-issues/static/js/runtime~main.e4eb08d1.js",
+  "runtime~main.js.map": "/gh-issues/static/js/runtime~main.e4eb08d1.js.map",
+  "static/js/2.cf46bf96.chunk.js": "/gh-issues/static/js/2.cf46bf96.chunk.js",
+  "static/js/2.cf46bf96.chunk.js.map": "/gh-issues/static/js/2.cf46bf96.chunk.js.map",
+  "index.html": "/gh-issues/index.html",
+  "precache-manifest.481cadc44a4482ba616dc413e134ab27.js": "/gh-issues/precache-manifest.481cadc44a4482ba616dc413e134ab27.js",
+  "service-worker.js": "/gh-issues/service-worker.js",
+  "static/css/main.1585d15a.chunk.css.map": "/gh-issues/static/css/main.1585d15a.chunk.css.map"
 }
