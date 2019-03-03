@@ -2,3 +2,4 @@
 **/*.rs.bk
 frontend/node_modules
 frontend/src/generated
+.DS_Store
