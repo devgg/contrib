@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import { Switch, HashRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import AppContainer from "./AppContainer.js";
 

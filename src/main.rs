@@ -9,6 +9,7 @@ extern crate log;
 extern crate env_logger;
 
 use std::collections::HashMap;
+use std::fs::create_dir_all;
 use std::fs::File;
 use std::io::prelude::*;
 use std::iter::FromIterator;
@@ -284,11 +285,25 @@ fn get_all_repositories(mut language: Language) -> String {
     language.to_javascript()
 }
 
-fn main() {
+fn main() -> Result<(), impl std::error::Error> {
     env_logger::init();
-    let mut f = File::open("languages.json").unwrap();
+    let mut f = match File::open("languages.json") {
+        Ok(f) => f,
+        Err(e) => {
+            error!("Error can not open language json file: {}", e);
+            return Err(e);
+        }
+    };
+
     let mut buffer = String::new();
-    f.read_to_string(&mut buffer).unwrap();
+    match f.read_to_string(&mut buffer) {
+        Ok(_) => {}
+        Err(e) => {
+            error!("Error can not read language json file: {}", e);
+            return Err(e);
+        }
+    };
+
     let languages: Vec<Language> = serde_json::from_str(&buffer).unwrap();
 
     let (tx, rx) = mpsc::channel();
@@ -306,11 +321,20 @@ fn main() {
         result.push(language);
     }
 
+    match create_dir_all("frontend/src/generated") {
+        Ok(_) => {}
+        Err(e) => {
+            error!("Error during directory creation: {}", e);
+            return Err(e);
+        }
+    }
+
     let mut buffer = File::create("frontend/src/generated/data.js").expect("");
     match write!(buffer, "export default [\n{}\n];", result.join(",\n")) {
-        Ok(_) => return,
+        Ok(v) => Ok(v),
         Err(e) => {
             error!("Error during final write: {}", e);
+            return Err(e);
         }
     }
 }

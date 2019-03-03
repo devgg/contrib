@@ -61,16 +61,6 @@ class LanguageDescription extends Component {
   }
 }
 
-class Sidebar extends Component {
-  render() {
-    return (
-      <div className={`App-sidebar ${this.props.cls}`}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
-
 class AppContainer extends Component {
   options = [];
   index = {
