@@ -93,6 +93,10 @@
     margin: 10px;
     width: calc(100% - 20px);
   }
+
+  input {
+    font-size: 16px;
+  }
 }
 
 .App-social {
