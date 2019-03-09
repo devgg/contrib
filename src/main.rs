@@ -35,6 +35,7 @@ pub struct Repositories;
 const GITHUB_API_URL: &str = "https://api.github.com/graphql";
 const GITHUB_AUTH_TOKEN: &str = "11cd3b0cfcae28d4f8708e7c8ff5d3a1d15aed9c";
 const NUM_LANGUAGES: i64 = 10;
+const AVATAR_SIZE: i64 = 80;
 const NUM_REPOSITORIES_PER_REQUEST: i64 = 15;
 const MIN_NUM_ISSUES: i64 = 10;
 const NUM_REPOSITORIES: usize = 20;
@@ -82,6 +83,7 @@ impl Repositories {
             cursor,
             labels: LABELS.into_iter().map(ToString::to_string).collect(),
             num_languages: NUM_LANGUAGES,
+            avatar_size: AVATAR_SIZE,
         })
     }
 
