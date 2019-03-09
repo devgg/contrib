@@ -16,6 +16,7 @@ use std::io::prelude::*;
 use std::iter::FromIterator;
 use std::sync::mpsc;
 use std::thread;
+use std::time;
 mod repository;
 use repository::Label;
 use repository::Language;
@@ -36,7 +37,7 @@ pub struct Repositories;
 const GITHUB_API_URL: &str = "https://api.github.com/graphql";
 const NUM_LANGUAGES: i64 = 10;
 const AVATAR_SIZE: i64 = 80;
-const NUM_REPOSITORIES_PER_REQUEST: i64 = 15;
+const NUM_REPOSITORIES_PER_REQUEST: i64 = 50;
 const MIN_NUM_ISSUES: i64 = 10;
 const NUM_REPOSITORIES: usize = 20;
 const NUM_RETRIES: i64 = 100;
@@ -223,9 +224,13 @@ struct SearchObject {
     language: String,
     repositories: Vec<Repository>,
     cursor: Option<String>,
+    timeout: f32,
 }
 
 fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
+    // Sleeping with exponential backoff so we do not make GitHub angry.
+    thread::sleep(time::Duration::from_secs(search_object.timeout as u64));
+
     let q = Repositories::create_query(
         NUM_REPOSITORIES_PER_REQUEST,
         &search_object.language,
@@ -246,7 +251,13 @@ fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
         }
     };
 
-    debug!("Status: {}", res.status());
+    if res.status() != 200 {
+        error!("Status: {}", res.status());
+        if res.status() == 403 {
+            search_object.timeout = search_object.timeout.powf(1.2).max(1.1);
+        }
+        return;
+    }
 
     let response_body: Response<repositories::ResponseData> = match res.json() {
         Ok(res) => res,
@@ -259,7 +270,11 @@ fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
     let response_data: repositories::ResponseData = match response_body.data {
         Some(x) => x,
         None => {
-            error!("No data found.");
+            error!(
+                "No data found for {} and cursor: {}.",
+                search_object.language,
+                search_object.cursor.clone().unwrap_or_default()
+            );
             return;
         }
     };
@@ -271,6 +286,7 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> String {
         cursor: None,
         language: language.search_term.clone(),
         repositories: vec![],
+        timeout: 10.0,
     };
     let mut len = 0;
     while len < NUM_RETRIES && search_object.repositories.len() < NUM_REPOSITORIES {

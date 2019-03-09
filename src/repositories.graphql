@@ -1,4 +1,10 @@
-query Repositories($num_results: Int!, $query: String!, $cursor: String, $labels: [String!]!, $num_languages: Int!, $avatar_size: Int!) {
+query Repositories(
+  $num_results: Int!, 
+  $query: String!, 
+  $cursor: String, 
+  $labels: [String!]!, 
+  $num_languages: Int!, 
+  $avatar_size: Int!) {
   search(first: $num_results, query: $query, after: $cursor, type: REPOSITORY) {
     repositoryCount
     pageInfo {
