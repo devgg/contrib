@@ -39,7 +39,7 @@ const NUM_LANGUAGES: i64 = 10;
 const AVATAR_SIZE: i64 = 80;
 const NUM_REPOSITORIES_PER_REQUEST: i64 = 50;
 const MIN_NUM_ISSUES: i64 = 10;
-const NUM_REPOSITORIES: usize = 20;
+const NUM_REPOSITORIES: usize = 40;
 const NUM_RETRIES: i64 = 100;
 const LABELS: [&str; 27] = [
     "help wanted",
@@ -102,6 +102,11 @@ impl Repositories {
                 return None;
             }
         };
+
+        if repo.issues.total_count < MIN_NUM_ISSUES {
+            debug!("Not enough issues");
+            return None;
+        }
 
         let languages = repo
             .languages
@@ -172,11 +177,6 @@ impl Repositories {
             .collect();
         labels.sort_by(|a, b| b.count.cmp(&a.count));
 
-        if repo.issues.total_count < MIN_NUM_ISSUES {
-            debug!("Not enough issues");
-            return None;
-        }
-
         let avatar_url = match repo.owner.on {
             repositories::RepositoriesSearchNodesOnRepositoryOwnerOn::User(user) => user.avatar_url,
             repositories::RepositoriesSearchNodesOnRepositoryOwnerOn::Organization(
@@ -187,7 +187,7 @@ impl Repositories {
         Some(Repository {
             name_with_owner: repo.name_with_owner,
             url: repo.url,
-            description: repo.description.expect(""),
+            description: repo.description.unwrap_or_default(),
             homepage_url: repo.homepage_url.unwrap_or_default(),
             avatar_url,
             num_forks: repo.fork_count,
