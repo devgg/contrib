@@ -9,6 +9,7 @@ extern crate log;
 extern crate env_logger;
 
 use std::collections::HashMap;
+use std::env;
 use std::fs::create_dir_all;
 use std::fs::File;
 use std::io::prelude::*;
@@ -33,7 +34,6 @@ type URI = String;
 pub struct Repositories;
 
 const GITHUB_API_URL: &str = "https://api.github.com/graphql";
-const GITHUB_AUTH_TOKEN: &str = "11cd3b0cfcae28d4f8708e7c8ff5d3a1d15aed9c";
 const NUM_LANGUAGES: i64 = 10;
 const AVATAR_SIZE: i64 = 80;
 const NUM_REPOSITORIES_PER_REQUEST: i64 = 15;
@@ -225,7 +225,7 @@ struct SearchObject {
     cursor: Option<String>,
 }
 
-fn get_repositories(mut search_object: &mut SearchObject) {
+fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
     let q = Repositories::create_query(
         NUM_REPOSITORIES_PER_REQUEST,
         &search_object.language,
@@ -235,7 +235,7 @@ fn get_repositories(mut search_object: &mut SearchObject) {
 
     let mut res = match client
         .post(GITHUB_API_URL)
-        .bearer_auth(GITHUB_AUTH_TOKEN)
+        .bearer_auth(gh_token)
         .json(&q)
         .send()
     {
@@ -266,7 +266,7 @@ fn get_repositories(mut search_object: &mut SearchObject) {
     Repositories::parse_response(response_data, &mut search_object);
 }
 
-fn get_all_repositories(mut language: Language) -> String {
+fn get_all_repositories(mut language: Language, gh_token: String) -> String {
     let mut search_object = SearchObject {
         cursor: None,
         language: language.search_term.clone(),
@@ -274,7 +274,7 @@ fn get_all_repositories(mut language: Language) -> String {
     };
     let mut len = 0;
     while len < NUM_RETRIES && search_object.repositories.len() < NUM_REPOSITORIES {
-        get_repositories(&mut search_object);
+        get_repositories(&mut search_object, &gh_token);
         info!(
             "{}: [{} / {}]",
             language.display_name,
@@ -287,13 +287,21 @@ fn get_all_repositories(mut language: Language) -> String {
     language.to_javascript()
 }
 
-fn main() -> Result<(), impl std::error::Error> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     env_logger::init();
+    let gh_token = match env::var("GITHUB_GRAPHQL_TOKEN") {
+        Ok(t) => t,
+        Err(e) => {
+            error!("Error github api token not defined: {}", e);
+            return Err(Box::new(e));
+        }
+    };
+
     let mut f = match File::open("languages.json") {
         Ok(f) => f,
         Err(e) => {
             error!("Error can not open language json file: {}", e);
-            return Err(e);
+            return Err(Box::new(e));
         }
     };
 
@@ -302,7 +310,7 @@ fn main() -> Result<(), impl std::error::Error> {
         Ok(_) => {}
         Err(e) => {
             error!("Error can not read language json file: {}", e);
-            return Err(e);
+            return Err(Box::new(e));
         }
     };
 
@@ -311,8 +319,9 @@ fn main() -> Result<(), impl std::error::Error> {
     let (tx, rx) = mpsc::channel();
     languages.into_iter().for_each(|language| {
         let tx = mpsc::Sender::clone(&tx);
+        let gh_token = gh_token.clone();
         thread::spawn(move || {
-            let repositories = get_all_repositories(language);
+            let repositories = get_all_repositories(language, gh_token);
             tx.send(repositories).unwrap();
         });
     });
@@ -327,7 +336,7 @@ fn main() -> Result<(), impl std::error::Error> {
         Ok(_) => {}
         Err(e) => {
             error!("Error during directory creation: {}", e);
-            return Err(e);
+            return Err(Box::new(e));
         }
     }
 
@@ -336,7 +345,7 @@ fn main() -> Result<(), impl std::error::Error> {
         Ok(v) => Ok(v),
         Err(e) => {
             error!("Error during final write: {}", e);
-            return Err(e);
+            return Err(Box::new(e));
         }
     }
 }
