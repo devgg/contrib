@@ -19,11 +19,16 @@
   color: grey;
 }
 
-.Stats-issue-label-container {
-  margin: 5px 0;
+.Labels-container {
+  display: flex;
+  flex-direction: column;
 }
 
-.Stats-issue-label {
+.Label-container {
+  margin: 4px 0;
+}
+
+.Label {
   background-color: grey;
   border-radius: 2px;
   box-shadow: inset 0 -1px 0 rgba(27, 31, 35, 0.12);
@@ -67,4 +72,43 @@
 .ui.label.Repository-topic:hover {
   background-color: #def;
   color: #0366d6;
+}
+
+@media screen and (max-width: 999px) {
+  .Repository-container {
+    flex-direction: column;
+  }
+
+  .Repository-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+
+  .ui.tiny.image {
+    height: 80px;
+  }
+
+  .Description-container {
+    width: 100%;
+  }
+
+  .Description-text {
+    white-space: normal;
+  }
+
+  .Stats-container {
+    align-self: center;
+    margin-left: 15px;
+    margin-right: 10px;
+  }
+
+  .Labels-container {
+    margin-top: 5px;
+  }
+
+  .Label-container {
+    margin: 5px 0;
+  }
 }

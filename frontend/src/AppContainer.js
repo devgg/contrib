@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Button, Dropdown, Icon, Image, Segment } from "semantic-ui-react";
+import {
+  Responsive,
+  Button,
+  Dropdown,
+  Icon,
+  Image,
+  Segment
+} from "semantic-ui-react";
 import DataTable from "./DataTable.js";
 import data from "./generated/data.js";
 
@@ -61,6 +68,21 @@ class LanguageDescription extends Component {
   }
 }
 
+class Controls extends Component {
+  render() {
+    return (
+      <Segment className="App-controls">
+        <Navigation
+          options={this.props.options}
+          default={this.props.language.search_term}
+          onLanguageChange={this.props.onLanguageChange}
+        />
+        <LanguageDescription data={this.props.language} />
+      </Segment>
+    );
+  }
+}
+
 class AppContainer extends Component {
   options = [];
   index = {
@@ -91,17 +113,26 @@ class AppContainer extends Component {
       data[this.index.language[this.props.match.params.language]];
     return (
       <div className="App-container" ref={this.myRef}>
-        <Segment className="App-controls">
+        <Responsive minWidth={1000}>
+          <Controls
+            options={this.options}
+            language={language}
+            onLanguageChange={this.handleLanguageChange}
+          />
+          <div className="App-main">
+            <DataTable data={language.repositories} />
+          </div>
+        </Responsive>
+        <Responsive maxWidth={999}>
           <Navigation
             options={this.options}
             default={language.search_term}
             onLanguageChange={this.handleLanguageChange}
           />
-          <LanguageDescription data={language} />
-        </Segment>
-        <div className="App-main">
-          <DataTable data={language.repositories} />
-        </div>
+          <div className="App-main">
+            <DataTable data={language.repositories} />
+          </div>
+        </Responsive>
       </div>
     );
   }

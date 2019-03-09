@@ -1,38 +1,12 @@
 .App-container {
   min-height: 100vh;
-  width: 1000px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.App-sidebar {
-  width: 300px;
-  height: 100vh;
-  position: fixed;
-  background: #34495e;
-  color: white;
-  animation-duration: 10s;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
-  transition: left 0.5s, right 0.5s;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 30px 30px;
 }
 
 .App-controls-container {
   position: relative;
   height: 100%;
-  width: 300px;
-}
-
-.ui.segment.App-controls {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 20px);
-  position: fixed;
-  margin: 10px;
   width: 300px;
 }
 
@@ -81,14 +55,43 @@
 }
 
 .App-main {
-  /* padding-left: 300px;
-  padding-right: 300px;*/
-  width: 700px;
-  display: flex;
-  justify-content: center;
-  margin-left: 340px;
   background: white;
   padding: 10px;
+}
+
+@media screen and (min-width: 1000px) {
+  .App-container {
+    width: 1000px;
+  }
+
+  .App-main {
+    margin-left: 340px;
+    width: 700px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ui.segment.App-controls {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 20px);
+    position: fixed;
+    margin: 10px;
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .App-main {
+    width: 100%;
+    height: calc(100vh - 48px);
+    overflow-y: scroll;
+  }
+
+  .ui.dropdown.App-dropdown {
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
 }
 
 .App-social {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Repository.css";
-import { Icon, Label, Image } from "semantic-ui-react";
+import { Icon, Label, Image, Responsive } from "semantic-ui-react";
 import tinycolor from "tinycolor2";
 
 import { Popup, Segment } from "semantic-ui-react";
@@ -33,12 +33,40 @@ class Stat extends Component {
   }
 }
 
-class Stats extends Component {
+class Labels extends Component {
   render() {
     const is_max =
       this.props.num_issues >
       this.props.labels.reduce((acc, curr) => acc + curr.count, 0);
 
+    return (
+      <div className="Labels-container">
+        {this.props.labels.map(label => {
+          return (
+            <div className="Label-container" key={label.name}>
+              <span
+                className="Label"
+                style={{
+                  color:
+                    tinycolor(label.color).getBrightness() > 128
+                      ? "black"
+                      : "white",
+                  backgroundColor: "#" + label.color
+                }}
+              >
+                {label.name}
+              </span>
+              {" (" + label.count + (is_max ? "+" : "") + ")"}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+}
+
+class Stats extends Component {
+  render() {
     return (
       <div className="Stats-container">
         <Stat class_name="Stats-star" icon="star" value={this.props.num_stars}>
@@ -53,23 +81,10 @@ class Stats extends Component {
           value={this.props.num_issues}
         >
           <span>{"Number of Issues with Label "}</span>
-          {this.props.labels.map(label => (
-            <div className="Stats-issue-label-container" key={label.name}>
-              <span
-                className="Stats-issue-label"
-                style={{
-                  color:
-                    tinycolor(label.color).getBrightness() > 128
-                      ? "black"
-                      : "white",
-                  backgroundColor: "#" + label.color
-                }}
-              >
-                {label.name}
-              </span>
-              {" (" + label.count + (is_max ? "+" : "") + ")"}
-            </div>
-          ))}
+          <Labels
+            labels={this.props.labels}
+            num_issues={this.props.num_issues}
+          />
         </Stat>
       </div>
     );
@@ -127,22 +142,48 @@ class Repository extends Component {
   render() {
     return (
       <Segment>
-        <div className="Repository-container">
-          <Image src={this.props.avatar_url} size="tiny" />
-          <Stats
-            num_stars={this.props.num_stars}
-            num_forks={this.props.num_forks}
-            num_issues={this.props.num_issues}
-            labels={this.props.labels}
-          />
-          <Description
-            name_with_owner={this.props.name_with_owner}
-            url={this.props.url}
-            description={this.props.description}
-            labels={this.props.labels}
-            topics={this.props.topics}
-          />
-        </div>
+        <Responsive minWidth={1000}>
+          <div className="Repository-container">
+            <Image src={this.props.avatar_url} size="tiny" />
+            <Stats
+              num_stars={this.props.num_stars}
+              num_forks={this.props.num_forks}
+              num_issues={this.props.num_issues}
+              labels={this.props.labels}
+            />
+            <Description
+              name_with_owner={this.props.name_with_owner}
+              url={this.props.url}
+              description={this.props.description}
+              labels={this.props.labels}
+              topics={this.props.topics}
+            />
+          </div>
+        </Responsive>
+        <Responsive maxWidth={999}>
+          <div className="Repository-container">
+            <div className="Repository-header">
+              <Image src={this.props.avatar_url} size="tiny" />
+              <Stats
+                num_stars={this.props.num_stars}
+                num_forks={this.props.num_forks}
+                num_issues={this.props.num_issues}
+                labels={this.props.labels}
+              />
+              <Labels
+                labels={this.props.labels}
+                num_issues={this.props.num_issues}
+              />
+            </div>
+            <Description
+              name_with_owner={this.props.name_with_owner}
+              url={this.props.url}
+              description={this.props.description}
+              labels={this.props.labels}
+              topics={[]}
+            />
+          </div>
+        </Responsive>
       </Segment>
     );
   }
