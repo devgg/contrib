@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDom from "react-dom";
 import {
   Responsive,
   Button,
@@ -106,6 +107,7 @@ class AppContainer extends Component {
 
   handleLanguageChange = (e, { value }) => {
     this.props.history.push("/language/" + value);
+    window.scrollTo(0, 0);
   };
 
   render() {
