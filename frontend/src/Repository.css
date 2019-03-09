@@ -53,7 +53,7 @@
 .Description-text {
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 500px;
+  max-width: 460px;
   overflow: hidden;
 }
 
