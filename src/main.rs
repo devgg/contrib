@@ -347,6 +347,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     for language in rx {
         result.push(language);
     }
+    // This is super hacky and relies on the display_name being the first value to be serialized.
+    result.sort();
 
     match create_dir_all("frontend/src/generated") {
         Ok(_) => {}
