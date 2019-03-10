@@ -41,6 +41,16 @@ const NUM_REPOSITORIES_PER_REQUEST: i64 = 50;
 const MIN_NUM_ISSUES: i64 = 10;
 const NUM_REPOSITORIES: usize = 40;
 const NUM_RETRIES: i64 = 100;
+const LANGUAGES: [&str; 8] = [
+    "c",
+    "csharp",
+    "cpp",
+    "java",
+    "javascript",
+    "python",
+    "rust",
+    "typescript",
+];
 const LABELS: [&str; 27] = [
     "help wanted",
     "beginner",
@@ -292,7 +302,7 @@ fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
 fn get_all_repositories(mut language: Language, gh_token: String) -> String {
     let mut search_object = SearchObject {
         cursor: None,
-        language: language.search_term.clone(),
+        language: language.name.clone(),
         repositories: vec![],
         timeout: 10.0,
         finished: false,
@@ -307,7 +317,7 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> String {
             "[{} / {}] - {}",
             search_object.repositories.len(),
             NUM_REPOSITORIES,
-            language.display_name
+            language.name
         );
         len = len + 1;
     }
@@ -325,29 +335,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     };
 
-    let mut f = match File::open("languages.json") {
-        Ok(f) => f,
-        Err(e) => {
-            error!("Error can not open language json file: {}", e);
-            return Err(Box::new(e));
-        }
-    };
-
-    let mut buffer = String::new();
-    match f.read_to_string(&mut buffer) {
-        Ok(_) => {}
-        Err(e) => {
-            error!("Error can not read language json file: {}", e);
-            return Err(Box::new(e));
-        }
-    };
-
-    let languages: Vec<Language> = serde_json::from_str(&buffer).unwrap();
-
     let (tx, rx) = mpsc::channel();
-    languages.into_iter().for_each(|language| {
+    LANGUAGES.into_iter().for_each(|language| {
         let tx = mpsc::Sender::clone(&tx);
         let gh_token = gh_token.clone();
+        let language = Language {
+            name: language.to_string(),
+            repositories: vec![],
+        };
         thread::spawn(move || {
             let repositories = get_all_repositories(language, gh_token);
             tx.send(repositories).unwrap();

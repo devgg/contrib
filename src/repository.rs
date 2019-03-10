@@ -32,10 +32,7 @@ pub struct Repository {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Language {
-    pub display_name: String,
-    pub search_term: String,
-    pub image: String,
-    pub description: String,
+    pub name: String,
     pub repositories: Vec<Repository>,
 }
 
@@ -141,10 +138,7 @@ impl ToJavascript for Language {
     fn to_javascript(&self) -> String {
         to_object(
             &[
-                to_field("display_name", &self.display_name),
-                to_field("search_term", &self.search_term),
-                to_field("image", &self.image),
-                to_field("description", &self.description),
+                to_field("name", &self.name),
                 to_field("repositories", &self.repositories),
             ]
             .join(",\n"),

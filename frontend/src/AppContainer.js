@@ -5,10 +5,12 @@ import {
   Dropdown,
   Icon,
   Image,
+  Popup,
   Segment
 } from "semantic-ui-react";
 import DataTable from "./DataTable.js";
 import data from "./generated/data.js";
+import metadata from "./metadata.js";
 
 class Navigation extends Component {
   shouldComponentUpdate(nextProps) {
@@ -34,14 +36,30 @@ class Navigation extends Component {
 class SocialButton extends Component {
   render() {
     return (
-      <Button animated basic>
-        <Button.Content visible>
-          <Icon name={this.props.icon} />
-        </Button.Content>
-        <Button.Content hidden>
-          <Icon name="arrow right" />
-        </Button.Content>
-      </Button>
+      <Popup
+        on="hover"
+        trigger={
+          <Button
+            animated
+            basic
+            as="a"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={this.props.url}
+          >
+            <Button.Content visible>
+              <Icon name={this.props.icon} />
+            </Button.Content>
+            <Button.Content hidden>
+              <Icon name="arrow right" />
+            </Button.Content>
+          </Button>
+        }
+      >
+        <Popup.Content>
+          {this.props.displayName + " on " + this.props.name}
+        </Popup.Content>
+      </Popup>
     );
   }
 }
@@ -52,16 +70,20 @@ class LanguageDescription extends Component {
       <div className="LanguageDescription-container">
         <Image
           className="LanguageDescription-image"
-          src={this.props.data.image}
+          src={this.props.imageUrl}
         />
-        <h1>{this.props.data.display_name}</h1>
-        <div className="LanguageDescription-text">
-          {this.props.data.description}
-        </div>
+        <h1>{this.props.displayName}</h1>
+        <div className="LanguageDescription-text">{this.props.description}</div>
         <div className="App-social">
-          <SocialButton icon="github" />
-          <SocialButton icon="stack overflow" />
-          <SocialButton icon="wikipedia w" />
+          {this.props.links.map(link => {
+            return (
+              <SocialButton
+                key={link.name}
+                displayName={this.props.displayName}
+                {...link}
+              />
+            );
+          })}
         </div>
       </div>
     );
@@ -74,10 +96,10 @@ class Controls extends Component {
       <Segment className="App-controls">
         <Navigation
           options={this.props.options}
-          default={this.props.language.search_term}
+          default={this.props.language.name}
           onLanguageChange={this.props.onLanguageChange}
         />
-        <LanguageDescription data={this.props.language} />
+        <LanguageDescription {...this.props.language} />
       </Segment>
     );
   }
@@ -91,15 +113,20 @@ class AppContainer extends Component {
 
   constructor() {
     super();
+    for (let i = 0; i < data.length; ++i) {
+      const language = data[i].name;
+      if (metadata[language] === undefined) {
+        throw new Error("Metadata not found for: " + language);
+      }
+      Object.assign(data[i], metadata[language]);
+      this.index.language[language] = i;
+    }
     for (const language in data) {
       this.options.push({
-        key: data[language].search_term,
-        value: data[language].search_term,
-        text: data[language].display_name
+        key: data[language].name,
+        value: data[language].name,
+        text: data[language].displayName
       });
-    }
-    for (let i = 0; i < data.length; ++i) {
-      this.index.language[data[i].search_term] = i;
     }
     this.myRef = React.createRef();
   }
@@ -127,7 +154,7 @@ class AppContainer extends Component {
         <Responsive maxWidth={999}>
           <Navigation
             options={this.options}
-            default={language.search_term}
+            default={language.name}
             onLanguageChange={this.handleLanguageChange}
           />
           <div className="App-main">

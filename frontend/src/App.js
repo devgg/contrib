@@ -5,8 +5,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import "./App.css";
 import AppContainer from "./AppContainer.js";
+import "./App.css";
 
 class App extends Component {
   render() {
