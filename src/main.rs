@@ -207,7 +207,14 @@ impl Repositories {
             response_data.search.repository_count, response_data.rate_limit
         );
 
-        search_object.cursor = response_data.search.page_info.end_cursor;
+        search_object.cursor = match response_data.search.page_info.end_cursor {
+            Some(c) => Some(c),
+            None => {
+                search_object.finished = true;
+                info!("Ran out of repositories for {}", search_object.language);
+                return;
+            }
+        };
 
         let mut repositories = response_data
             .search
@@ -225,6 +232,7 @@ struct SearchObject {
     repositories: Vec<Repository>,
     cursor: Option<String>,
     timeout: f32,
+    finished: bool,
 }
 
 fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
@@ -287,15 +295,19 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> String {
         language: language.search_term.clone(),
         repositories: vec![],
         timeout: 10.0,
+        finished: false,
     };
     let mut len = 0;
-    while len < NUM_RETRIES && search_object.repositories.len() < NUM_REPOSITORIES {
+    while len < NUM_RETRIES
+        && search_object.repositories.len() < NUM_REPOSITORIES
+        && !search_object.finished
+    {
         get_repositories(&mut search_object, &gh_token);
         info!(
-            "{}: [{} / {}]",
-            language.display_name,
+            "[{} / {}] - {}",
             search_object.repositories.len(),
-            NUM_REPOSITORIES
+            NUM_REPOSITORIES,
+            language.display_name
         );
         len = len + 1;
     }
