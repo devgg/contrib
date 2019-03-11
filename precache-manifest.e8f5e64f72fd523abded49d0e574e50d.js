@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "cdc6c67d56d8c196d6b7",
+    "revision": "1a7f6dc3a2f62c21e278",
     "url": "/gh-issues/static/css/main.441ec6bb.chunk.css"
   },
   {
-    "revision": "cdc6c67d56d8c196d6b7",
-    "url": "/gh-issues/static/js/main.cdc6c67d.chunk.js"
+    "revision": "1a7f6dc3a2f62c21e278",
+    "url": "/gh-issues/static/js/main.1a7f6dc3.chunk.js"
   },
   {
     "revision": "e4eb08d1a564a1106944",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/gh-issues/static/js/2.2df262d8.chunk.js"
   },
   {
-    "revision": "309cb6ebc507c4033ee8d5cc73478652",
+    "revision": "9fd2b59fe57f26168cca7801dd68e7f3",
     "url": "/gh-issues/index.html"
   }
 ];
