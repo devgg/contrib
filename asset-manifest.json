@@ -1,13 +1,13 @@
 {
-  "main.css": "/gh-issues/static/css/main.fe3147bf.chunk.css",
-  "main.js": "/gh-issues/static/js/main.f70c97b7.chunk.js",
-  "main.js.map": "/gh-issues/static/js/main.f70c97b7.chunk.js.map",
+  "main.css": "/gh-issues/static/css/main.b241f060.chunk.css",
+  "main.js": "/gh-issues/static/js/main.ad8af5dc.chunk.js",
+  "main.js.map": "/gh-issues/static/js/main.ad8af5dc.chunk.js.map",
   "runtime~main.js": "/gh-issues/static/js/runtime~main.e4eb08d1.js",
   "runtime~main.js.map": "/gh-issues/static/js/runtime~main.e4eb08d1.js.map",
   "static/js/2.81b5eb97.chunk.js": "/gh-issues/static/js/2.81b5eb97.chunk.js",
   "static/js/2.81b5eb97.chunk.js.map": "/gh-issues/static/js/2.81b5eb97.chunk.js.map",
   "index.html": "/gh-issues/index.html",
-  "precache-manifest.4f3e9cce485776a5e5e3c53032f9b36a.js": "/gh-issues/precache-manifest.4f3e9cce485776a5e5e3c53032f9b36a.js",
+  "precache-manifest.be6bcfb9f93977f81c9eed3e10e534df.js": "/gh-issues/precache-manifest.be6bcfb9f93977f81c9eed3e10e534df.js",
   "service-worker.js": "/gh-issues/service-worker.js",
-  "static/css/main.fe3147bf.chunk.css.map": "/gh-issues/static/css/main.fe3147bf.chunk.css.map"
+  "static/css/main.b241f060.chunk.css.map": "/gh-issues/static/css/main.b241f060.chunk.css.map"
 }
