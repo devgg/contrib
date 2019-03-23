@@ -82,25 +82,27 @@
   }
 }
 
-@media screen and (max-width: 999px) {
-  .App-main {
-    width: 100%;
-    height: calc(100vh - 48px);
-    overflow-y: scroll;
-  }
-
-  .ui.dropdown.App-dropdown {
-    margin: 10px;
-    width: calc(100% - 20px);
-  }
-
-  input {
-    font-size: 16px;
-  }
+.ui.label.App-github {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background-color: #f1f8ff;
+  color: #0366d6;
+  font-size: 14px;
+  line-height: 17px;
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
 }
 
-.App-social {
-  display: flex;
+.ui.label.App-github:hover {
+  background-color: #def;
+  color: #0366d6;
+}
+
+i.icon.App-github-icon {
+  font-size: 17px;
 }
 
 .LanguageDescription-container {
@@ -117,8 +119,40 @@
 
 .LanguageDescription-text {
   flex-grow: 1;
+  overflow: hidden;
 }
 
 .App-dropdown.ui.search.dropdown .menu {
   max-height: 16.02857143rem;
+}
+
+@media screen and (max-width: 999px) {
+  .App-main {
+    width: 100%;
+    height: calc(100vh - 48px);
+    overflow-y: scroll;
+  }
+
+  .ui.dropdown.App-dropdown {
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  .ui.label.App-github {
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
+}
+
+.App-social {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.App-social > .ui.basic.button {
+  padding: 10px 1.5em 10px;
 }

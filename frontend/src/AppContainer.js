@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   Responsive,
+  Label,
   Button,
   Dropdown,
   Icon,
@@ -64,6 +65,24 @@ class SocialButton extends Component {
   }
 }
 
+class GitHubLink extends Component {
+  render() {
+    return (
+      <Label
+        key="asdf"
+        className="App-github"
+        as="a"
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://github.com/devgg/gh-issues"
+      >
+        <Icon className="App-github-icon" name="github" />
+        View on GitHub
+      </Label>
+    );
+  }
+}
+
 class LanguageDescription extends Component {
   render() {
     return (
@@ -73,7 +92,6 @@ class LanguageDescription extends Component {
           src={this.props.imageUrl}
         />
         <h1>{this.props.displayName}</h1>
-        <div className="LanguageDescription-text">{this.props.description}</div>
         <div className="App-social">
           {this.props.links.map(link => {
             return (
@@ -85,6 +103,8 @@ class LanguageDescription extends Component {
             );
           })}
         </div>
+        <div className="LanguageDescription-text">{this.props.description}</div>
+        <GitHubLink />
       </div>
     );
   }
@@ -157,6 +177,7 @@ class AppContainer extends Component {
             default={language.name}
             onLanguageChange={this.handleLanguageChange}
           />
+          <GitHubLink />
           <div className="App-main">
             <DataTable data={language.repositories} />
           </div>
