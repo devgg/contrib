@@ -126,11 +126,34 @@ i.icon.App-github-icon {
   max-height: 16.02857143rem;
 }
 
+.App-social {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.App-social > .ui.basic.button {
+  padding: 10px 1.5em 10px;
+}
+
+.App-mobile-header {
+  position: fixed !important;
+  top: 0;
+  width: 100%;
+  -webkit-backface-visibility: hidden;
+  z-index: 100;
+}
+
 @media screen and (max-width: 999px) {
+  .App-container {
+    overflow: hidden;
+    height: 100vh;
+  }
+
   .App-main {
     width: 100%;
-    height: calc(100vh - 48px);
+    height: calc(100vh - 100px);
     overflow-y: scroll;
+    margin-top: 100px;
   }
 
   .ui.dropdown.App-dropdown {
@@ -146,13 +169,4 @@ i.icon.App-github-icon {
     margin: 10px;
     width: calc(100% - 20px);
   }
-}
-
-.App-social {
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.App-social > .ui.basic.button {
-  padding: 10px 1.5em 10px;
 }

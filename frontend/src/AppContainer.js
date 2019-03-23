@@ -148,7 +148,6 @@ class AppContainer extends Component {
         text: data[language].displayName
       });
     }
-    this.myRef = React.createRef();
   }
 
   handleLanguageChange = (e, { value }) => {
@@ -160,8 +159,8 @@ class AppContainer extends Component {
     const language =
       data[this.index.language[this.props.match.params.language]];
     return (
-      <div className="App-container" ref={this.myRef}>
-        <Responsive minWidth={1000}>
+      <React.Fragment>
+        <Responsive minWidth={1000} as="div" className="App-container">
           <Controls
             options={this.options}
             language={language}
@@ -171,18 +170,20 @@ class AppContainer extends Component {
             <DataTable data={language.repositories} />
           </div>
         </Responsive>
-        <Responsive maxWidth={999}>
-          <Navigation
-            options={this.options}
-            default={language.name}
-            onLanguageChange={this.handleLanguageChange}
-          />
-          <GitHubLink />
+        <Responsive maxWidth={999} as="div" className="App-container">
+          <div className="App-mobile-header">
+            <Navigation
+              options={this.options}
+              default={language.name}
+              onLanguageChange={this.handleLanguageChange}
+            />
+            <GitHubLink />
+          </div>
           <div className="App-main">
             <DataTable data={language.repositories} />
           </div>
         </Responsive>
-      </div>
+      </React.Fragment>
     );
   }
 }
