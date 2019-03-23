@@ -112,6 +112,10 @@ i.icon.App-github-icon {
   flex-grow: 1;
 }
 
+.LanguageDescription-container > * {
+  flex-shrink: 0;
+}
+
 .LanguageDescription-image {
   height: 240px;
   margin: 10px 0;
@@ -120,6 +124,7 @@ i.icon.App-github-icon {
 .LanguageDescription-text {
   flex-grow: 1;
   overflow: hidden;
+  flex-shrink: 1;
 }
 
 .App-dropdown.ui.search.dropdown .menu {
@@ -133,6 +138,7 @@ i.icon.App-github-icon {
 
 .App-social > .ui.basic.button {
   padding: 10px 1.5em 10px;
+  height: 32px;
 }
 
 .App-mobile-header {
