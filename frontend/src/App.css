@@ -143,6 +143,7 @@ i.icon.App-github-icon {
 
 .App-mobile-header {
   position: fixed !important;
+  background-color: white;
   top: 0;
   width: 100%;
   -webkit-backface-visibility: hidden;
@@ -151,14 +152,9 @@ i.icon.App-github-icon {
 
 @media screen and (max-width: 999px) {
   .App-container {
-    overflow: hidden;
-    height: 100vh;
   }
 
   .App-main {
-    width: 100%;
-    height: calc(100vh - 100px);
-    overflow-y: scroll;
     margin-top: 100px;
   }
 
