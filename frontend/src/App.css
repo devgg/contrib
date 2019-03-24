@@ -117,13 +117,14 @@ i.icon.App-github-icon {
 }
 
 .LanguageDescription-image {
-  height: 240px;
+  width: 100%;
+  max-height: 300px;
   margin: 10px 0;
 }
 
 .LanguageDescription-text {
   flex-grow: 1;
-  overflow: hidden;
+  overflow: auto;
   flex-shrink: 1;
 }
 

@@ -18,10 +18,10 @@ use std::sync::mpsc;
 use std::thread;
 use std::time;
 mod repository;
+mod wikipedia;
 use repository::Label;
 use repository::Language;
 use repository::Repository;
-use repository::ToJavascript;
 use repository::Topic;
 
 type URI = String;
@@ -41,14 +41,33 @@ const NUM_REPOSITORIES_PER_REQUEST: i64 = 50;
 const MIN_NUM_ISSUES: i64 = 10;
 const NUM_REPOSITORIES: usize = 40;
 const NUM_RETRIES: i64 = 100;
-const LANGUAGES: [&str; 8] = [
+const LANGUAGES: [&str; 27] = [
     "c",
-    "csharp",
+    "clojure",
+    "cobol",
     "cpp",
+    "csharp",
+    "erlang",
+    "fsharp",
+    "go",
+    "groovy",
+    "hack",
+    "haskell",
     "java",
     "javascript",
+    "julia",
+    "kotlin",
+    "lua",
+    "matlab",
+    "objectivec",
+    "ocaml",
+    "perl",
     "python",
+    "r",
+    "ruby",
     "rust",
+    "scala",
+    "swift",
     "typescript",
 ];
 const LABELS: [&str; 27] = [
@@ -299,7 +318,7 @@ fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
     Repositories::parse_response(response_data, &mut search_object);
 }
 
-fn get_all_repositories(mut language: Language, gh_token: String) -> String {
+fn get_all_repositories(mut language: Language, gh_token: String) -> Language {
     let mut search_object = SearchObject {
         cursor: None,
         language: language.name.clone(),
@@ -322,7 +341,7 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> String {
         len = len + 1;
     }
     language.repositories = search_object.repositories;
-    language.to_javascript()
+    language
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -342,10 +361,25 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let language = Language {
             name: language.to_string(),
             repositories: vec![],
+            ..Default::default()
         };
         thread::spawn(move || {
-            let repositories = get_all_repositories(language, gh_token);
-            tx.send(repositories).unwrap();
+            let mut language = get_all_repositories(language, gh_token);
+            language.summary_html = match wikipedia::get_summary_html(&language.name) {
+                Some(html) => html,
+                None => {
+                    error!("Can not get summary html for language: {}", &language.name);
+                    String::from("")
+                }
+            };
+            language.image_url = match wikipedia::get_image_url(&language.name) {
+                Some(html) => html,
+                None => {
+                    error!("Can not get image url for language: {}", &language.name);
+                    String::from("")
+                }
+            };
+            tx.send(serde_json::to_string(&language).unwrap()).unwrap();
         });
     });
     drop(tx);
@@ -365,8 +399,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
     }
 
-    let mut buffer = File::create("frontend/src/generated/data.js").expect("");
-    match write!(buffer, "export default [\n{}\n];", result.join(",\n")) {
+    let mut buffer = File::create("frontend/src/generated/data.json").expect("");
+    match write!(buffer, "[\n{}\n]", result.join(",\n")) {
         Ok(v) => Ok(v),
         Err(e) => {
             error!("Error during final write: {}", e);

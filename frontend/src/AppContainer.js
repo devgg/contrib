@@ -10,7 +10,7 @@ import {
   Segment
 } from "semantic-ui-react";
 import DataTable from "./DataTable.js";
-import data from "./generated/data.js";
+import data from "./generated/data.json";
 import metadata from "./metadata.js";
 
 class Navigation extends Component {
@@ -89,7 +89,7 @@ class LanguageDescription extends Component {
       <div className="LanguageDescription-container">
         <Image
           className="LanguageDescription-image"
-          src={this.props.imageUrl}
+          src={this.props.image_url}
         />
         <h1>{this.props.displayName}</h1>
         <div className="App-social">
@@ -103,7 +103,10 @@ class LanguageDescription extends Component {
             );
           })}
         </div>
-        <div className="LanguageDescription-text">{this.props.description}</div>
+        <div
+          className="LanguageDescription-text"
+          dangerouslySetInnerHTML={{ __html: this.props.summary_html }}
+        />
         <GitHubLink />
       </div>
     );
@@ -138,7 +141,13 @@ class AppContainer extends Component {
       if (metadata[language] === undefined) {
         throw new Error("Metadata not found for: " + language);
       }
-      Object.assign(data[i], metadata[language]);
+      console.log(data[i]);
+      data[i].displayName = metadata[language].displayName;
+      data[i].links = metadata[language].links;
+      console.log(metadata[language].imageOverrideUrl);
+      if (metadata[language].imageOverrideUrl != null) {
+        data[i].image_url = metadata[language].imageOverrideUrl;
+      }
       this.index.language[language] = i;
     }
     for (const language in data) {
