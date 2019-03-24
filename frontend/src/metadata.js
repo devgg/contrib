@@ -26,7 +26,7 @@ function getStackOverflowLink(language) {
   );
 }
 
-function getWikipediaLink(language, suffix) {
+function getWikipediaLink(language, suffix = true) {
   return new LanguageLinks(
     "wikipedia.org",
     "https://en.wikipedia.org/wiki/" +
@@ -76,7 +76,7 @@ export default {
     "C#",
     getDefaultLinks(
       "csharp",
-      "docs.microsoft.com",
+      "microsoft.com",
       "https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/",
       "csharp",
       "c_sharp"
@@ -171,78 +171,169 @@ export default {
   ),
   swift: new LanguageMetadata(
     "Swift",
-    getDefaultLinks("swift", "", "", "swift", "swift"),
+    getDefaultLinks(
+      "swift",
+      "swift.org",
+      "https://swift.org/documentation/#the-swift-programming-language",
+      "swift",
+      "swift"
+    ),
     "https://upload.wikimedia.org/wikipedia/commons/9/9d/Swift_logo.svg"
   ),
   fsharp: new LanguageMetadata(
     "F#",
-    getDefaultLinks("fsharp", "", "", "fsharp", "F_Sharp")
+    getDefaultLinks(
+      "fsharp",
+      "microsoft.com",
+      "https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/",
+      "fsharp",
+      "F_Sharp"
+    )
   ),
   clojure: new LanguageMetadata(
     "Clojure",
-    getDefaultLinks("clojure", "", "", "clojure", "Clojure", false)
+    getDefaultLinks(
+      "clojure",
+      "clojuredocs.org",
+      "https://clojuredocs.org/quickref",
+      "clojure",
+      "Clojure",
+      false
+    )
   ),
   scala: new LanguageMetadata(
     "Scala",
-    getDefaultLinks("scala", "", "", "scala", "Scala")
+    getDefaultLinks(
+      "scala",
+      "scala-lang.org",
+      "https://docs.scala-lang.org/",
+      "scala",
+      "Scala"
+    )
   ),
   haskell: new LanguageMetadata(
     "Haskell",
-    getDefaultLinks("haskell", "", "", "haskell", "haskell")
+    getDefaultLinks(
+      "haskell",
+      "haskell.org",
+      "https://www.haskell.org/documentation/",
+      "haskell",
+      "haskell"
+    )
   ),
   julia: new LanguageMetadata(
     "Julia",
-    getDefaultLinks("julia", "", "", "julia", "julia")
+    getDefaultLinks(
+      "julia",
+      "julialang.org",
+      "https://docs.julialang.org",
+      "julia",
+      "julia"
+    )
   ),
   r: new LanguageMetadata(
     "R",
-    getDefaultLinks("r", "", "", "r", "r"),
+    getDefaultLinks(
+      "r",
+      "r-project.org",
+      "https://cran.r-project.org/doc/manuals/r-release/R-lang.html",
+      "r",
+      "r"
+    ),
     "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/2560px-R_logo.svg.png"
   ),
   ruby: new LanguageMetadata(
     "Ruby",
-    getDefaultLinks("ruby", "", "", "ruby", "ruby"),
+    getDefaultLinks(
+      "ruby",
+      "ruby-doc.org",
+      "https://ruby-doc.org/gettingstarted/",
+      "ruby",
+      "ruby"
+    ),
     "https://upload.wikimedia.org/wikipedia/commons/7/73/Ruby_logo.svg"
   ),
-  erlang: new LanguageMetadata(
-    "Erlang",
-    getDefaultLinks("erlang", "", "", "erlang", "erlang")
-  ),
-  hack: new LanguageMetadata(
-    "Hack",
-    getDefaultLinks("hack", "", "", "hack", "hack")
-  ),
+  erlang: new LanguageMetadata("Erlang", [
+    getReferenceLink("erlang.org", "https://www.erlang.org/docs"),
+    getStackOverflowLink("erlang"),
+    getWikipediaLink("erlang")
+  ]),
+  hack: new LanguageMetadata("Hack", [
+    getReferenceLink("hhvm.com", "https://docs.hhvm.com/hack/"),
+    getStackOverflowLink("hacklang"),
+    getWikipediaLink("hack")
+  ]),
   ocaml: new LanguageMetadata(
     "OCaml",
-    getDefaultLinks("ocaml", "", "", "ocaml", "ocaml"),
+    getDefaultLinks(
+      "ocaml",
+      "ocaml.org",
+      "https://ocaml.org/docs/",
+      "ocaml",
+      "ocaml",
+      false
+    ),
     "https://ocaml.org/img/OCaml_Sticker.svg"
   ),
   cobol: new LanguageMetadata(
     "COBOL",
-    getDefaultLinks("cobol", "", "", "cobol", "cobol"),
+    [
+      getReferenceLink("sourceforge.io", "https://open-cobol.sourceforge.io/"),
+      getStackOverflowLink("cobol"),
+      getWikipediaLink("cobol", false)
+    ],
     "https://cacm.acm.org/system/assets/0003/2653/092618_Kackr.io_Cobol.large.jpg?1537981861&1537981860"
   ),
   matlab: new LanguageMetadata(
     "MATLAB",
-    getDefaultLinks("matlab", "", "", "matlab", "matlab"),
+    getDefaultLinks(
+      "matlab",
+      "mathworks.com",
+      "https://www.mathworks.com/help/matlab/",
+      "matlab",
+      "matlab"
+    ),
     "https://www.mathworks.com/company/newsletters/articles/the-mathworks-logo-is-an-eigenfunction-of-the-wave-equation/_jcr_content/mainParsys/image_2.adapt.full.high.gif/1469941373397.gif"
   ),
   perl: new LanguageMetadata(
     "Perl",
-    getDefaultLinks("perl", "", "", "perl", "perl"),
+    getDefaultLinks(
+      "perl",
+      "perl.org",
+      "https://perldoc.perl.org/",
+      "perl",
+      "perl"
+    ),
     "https://cdn.worldvectorlogo.com/logos/perl.svg"
   ),
   objectivec: new LanguageMetadata(
     "Objective-C",
-    getDefaultLinks("objectivec", "", "", "objectivec", "objectivec"),
+    [
+      getReferenceLink(
+        "apple.com",
+        "https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html"
+      ),
+      getStackOverflowLink("objective-c"),
+      getWikipediaLink("objective-c", false)
+    ],
     "https://seeklogo.com/images/O/objective-c-logo-81746870EF-seeklogo.com.png"
   ),
   lua: new LanguageMetadata(
     "Lua",
-    getDefaultLinks("lua", "", "", "lua", "lua")
+    getDefaultLinks(
+      "lua",
+      "lua.org",
+      "https://www.lua.org/docs.html",
+      "lua",
+      "lua"
+    )
   ),
-  groovy: new LanguageMetadata(
-    "Groovy",
-    getDefaultLinks("groovy", "", "", "groovy", "groovy")
-  )
+  groovy: new LanguageMetadata("Groovy", [
+    getReferenceLink(
+      "groovy-lang.org",
+      "http://groovy-lang.org/documentation.html"
+    ),
+    getStackOverflowLink("groovy"),
+    getWikipediaLink("groovy")
+  ])
 };
