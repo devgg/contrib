@@ -1,6 +1,6 @@
 [package]
-name = "gh-issues"
-version = "0.1.0"
+name = "contrib"
+version = "1.0.0"
 authors = ["Florian Gauger <flo.gauger@gmail.com>"]
 edition = "2018"
 
