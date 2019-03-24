@@ -69,12 +69,11 @@ class GitHubLink extends Component {
   render() {
     return (
       <Label
-        key="asdf"
         className="App-github"
         as="a"
         target="_blank"
         rel="noopener noreferrer"
-        href="https://github.com/devgg/gh-issues"
+        href="https://github.com/devgg/contrib"
       >
         <Icon className="App-github-icon" name="github" />
         View on GitHub
