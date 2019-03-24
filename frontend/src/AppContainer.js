@@ -141,10 +141,8 @@ class AppContainer extends Component {
       if (metadata[language] === undefined) {
         throw new Error("Metadata not found for: " + language);
       }
-      console.log(data[i]);
       data[i].displayName = metadata[language].displayName;
       data[i].links = metadata[language].links;
-      console.log(metadata[language].imageOverrideUrl);
       if (metadata[language].imageOverrideUrl != null) {
         data[i].image_url = metadata[language].imageOverrideUrl;
       }

@@ -74,6 +74,12 @@
   color: #0366d6;
 }
 
+@media screen and (min-width: 1000px) {
+  .Repository-container {
+    min-width: 650px;
+  }
+}
+
 @media screen and (max-width: 999px) {
   .Repository-container {
     flex-direction: column;

@@ -108,10 +108,12 @@ class Description extends Component {
           target="_blank"
           rel="noopener noreferrer"
           href={
-            this.props.url +
-            '/issues?q=is:open is:issue label:"' +
-            this.props.labels[0].name +
-            '"'
+            this.props.url != null
+              ? this.props.url +
+                '/issues?q=is:open is:issue label:"' +
+                this.props.labels[0].name +
+                '"'
+              : "https://media.giphy.com/media/fhLgA6nJec3Cw/giphy.gif"
           }
         >
           {this.props.name_with_owner}
