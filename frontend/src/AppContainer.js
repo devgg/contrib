@@ -91,7 +91,10 @@ class LanguageDescription extends Component {
           className="LanguageDescription-image"
           src={this.props.image_url}
         />
-        <h1>{this.props.displayName}</h1>
+        <div
+          className="LanguageDescription-text"
+          dangerouslySetInnerHTML={{ __html: this.props.summary_html }}
+        />
         <div className="App-social">
           {this.props.links.map(link => {
             return (
@@ -103,10 +106,6 @@ class LanguageDescription extends Component {
             );
           })}
         </div>
-        <div
-          className="LanguageDescription-text"
-          dangerouslySetInnerHTML={{ __html: this.props.summary_html }}
-        />
         <GitHubLink />
       </div>
     );

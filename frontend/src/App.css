@@ -134,7 +134,7 @@ i.icon.App-github-icon {
 
 .App-social {
   display: flex;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .App-social > .ui.basic.button {
