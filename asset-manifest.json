@@ -1,13 +1,13 @@
 {
-  "main.css": "/contri/static/css/main.d8f1ec21.chunk.css",
-  "main.js": "/contri/static/js/main.1d97e3db.chunk.js",
-  "main.js.map": "/contri/static/js/main.1d97e3db.chunk.js.map",
-  "runtime~main.js": "/contri/static/js/runtime~main.9783c31a.js",
-  "runtime~main.js.map": "/contri/static/js/runtime~main.9783c31a.js.map",
-  "static/js/2.64618fd3.chunk.js": "/contri/static/js/2.64618fd3.chunk.js",
-  "static/js/2.64618fd3.chunk.js.map": "/contri/static/js/2.64618fd3.chunk.js.map",
-  "index.html": "/contri/index.html",
-  "precache-manifest.a28d0f1f24b1594ad7e2912ed4fd2ed9.js": "/contri/precache-manifest.a28d0f1f24b1594ad7e2912ed4fd2ed9.js",
-  "service-worker.js": "/contri/service-worker.js",
-  "static/css/main.d8f1ec21.chunk.css.map": "/contri/static/css/main.d8f1ec21.chunk.css.map"
+  "main.css": "/contrib/static/css/main.d8f1ec21.chunk.css",
+  "main.js": "/contrib/static/js/main.9e460966.chunk.js",
+  "main.js.map": "/contrib/static/js/main.9e460966.chunk.js.map",
+  "runtime~main.js": "/contrib/static/js/runtime~main.452d1390.js",
+  "runtime~main.js.map": "/contrib/static/js/runtime~main.452d1390.js.map",
+  "static/js/2.64618fd3.chunk.js": "/contrib/static/js/2.64618fd3.chunk.js",
+  "static/js/2.64618fd3.chunk.js.map": "/contrib/static/js/2.64618fd3.chunk.js.map",
+  "index.html": "/contrib/index.html",
+  "precache-manifest.984e6088ec6d3d68f247c89e337fd063.js": "/contrib/precache-manifest.984e6088ec6d3d68f247c89e337fd063.js",
+  "service-worker.js": "/contrib/service-worker.js",
+  "static/css/main.d8f1ec21.chunk.css.map": "/contrib/static/css/main.d8f1ec21.chunk.css.map"
 }
