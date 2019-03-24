@@ -1,8 +1,7 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "homepage": "http://gauger.io/contrib",
-  "private": true,
   "dependencies": {
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
