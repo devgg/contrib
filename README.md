@@ -6,7 +6,7 @@
 Find friendly open source projects with issues labeled for beginners 🚀. Begin contributing immediately 💻.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/8250067/54951175-41643480-4f43-11e9-8cd3-3802841bb61f.gif">
+  <img src="https://user-images.githubusercontent.com/8250067/54951544-3067f300-4f44-11e9-9897-29e1b3070165.gif">
 </p>
 
 
