@@ -14,7 +14,10 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path="/language/:language" component={AppContainer} />
-          <Route path="" render={() => <Redirect to="/language/cpp" />} />
+          <Route
+            path=""
+            render={() => <Redirect to="/language/javascript" />}
+          />
         </Switch>
       </Router>
     );
