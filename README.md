@@ -30,7 +30,7 @@ export GITHUB_GRAPHQL_TOKEN=<YOUR_TOKEN>
 RUST_BACKTRACE=1 RUST_LOG="contrib=info" cargo run
 ```
 
-Now we can run the frontend.
+This will generate `frontend/src/generated/data.json`. Now we can run the frontend.
 
 ```shell
 cd frontend/
