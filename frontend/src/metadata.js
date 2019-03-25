@@ -21,7 +21,7 @@ function getReferenceLink(name, url) {
 function getStackOverflowLink(language) {
   return new LanguageLinks(
     "stackoverflow.com",
-    "https://stackoverflow.com/questions/tagged/" + language,
+    "https://stackoverflow.com/tags/" + language + "/info",
     "stack overflow"
   );
 }
