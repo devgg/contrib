@@ -7,7 +7,7 @@ before_install:
   - nvm install node
 
 script:
-  - RUST_BACKTRACE=1 RUST_LOG="gh_issues=info" cargo run
+  - RUST_BACKTRACE=1 RUST_LOG="contrib=info" cargo run
   - cd frontend
   - npm install
   - npm run build
