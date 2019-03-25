@@ -16,7 +16,7 @@ class DataTable extends Component {
     } else {
       return (
         <Repository
-          name_with_owner="nothing found :("
+          name_with_owner="nothing found 😭"
           url={null}
           labels={[{ name: "no-help-needed", color: "000", count: -1 }]}
           avatar_url="https://www.meme-arsenal.com/memes/94a9ad7b17dc10347c2e421f750e92af.jpg"
