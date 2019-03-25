@@ -1,6 +1,6 @@
 # [contrib](http://gauger.io/contrib)
 
-[![Build Status](https://travis-ci.com/devgg/gh-issues.svg?branch=master)](https://travis-ci.com/devgg/gh-issues)
+[![Build Status](https://travis-ci.com/devgg/contrib.svg?branch=master)](https://travis-ci.com/devgg/contrib)
 ![License](https://img.shields.io/github/license/devgg/contrib.svg)
 
 Find friendly open source projects with issues labeled for beginners 🚀. Begin contributing immediately 💻.
@@ -30,7 +30,7 @@ export GITHUB_GRAPHQL_TOKEN=<YOUR_TOKEN>
 RUST_BACKTRACE=1 RUST_LOG="contrib=info" cargo run
 ```
 
-Now we can run the frontend.
+This will generate `frontend/src/generated/data.json`. Now we can run the frontend.
 
 ```shell
 cd frontend/
