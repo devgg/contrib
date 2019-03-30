@@ -4,11 +4,10 @@ import Repository from "./Repository.js";
 
 class DataTable extends Component {
   render() {
-    const repositories = this.props.data.filter(row => row.num_issues >= 1);
-    if (repositories.length > 0) {
+    if (this.props.repositories.length > 0) {
       return (
         <div>
-          {repositories.map(row => {
+          {this.props.repositories.map(row => {
             return <Repository key={row.name_with_owner} {...row} />;
           })}
         </div>

@@ -135,16 +135,18 @@ class AppContainer extends Component {
   constructor() {
     super();
     for (let i = 0; i < data.length; ++i) {
-      const language = data[i].name;
-      if (metadata[language] === undefined) {
-        throw new Error("Metadata not found for: " + language);
+      const language = data[i];
+      const name = language.name;
+      this.sortRepositories(language.repositories);
+      if (metadata[name] === undefined) {
+        throw new Error("Metadata not found for: " + name);
       }
-      data[i].displayName = metadata[language].displayName;
-      data[i].links = metadata[language].links;
-      if (metadata[language].imageOverrideUrl != null) {
-        data[i].image_url = metadata[language].imageOverrideUrl;
+      language.displayName = metadata[name].displayName;
+      language.links = metadata[name].links;
+      if (metadata[name].imageOverrideUrl != null) {
+        language.image_url = metadata[name].imageOverrideUrl;
       }
-      this.index.language[language] = i;
+      this.index.language[name] = i;
     }
     for (const language in data) {
       this.options.push({
@@ -153,6 +155,14 @@ class AppContainer extends Component {
         text: data[language].displayName
       });
     }
+  }
+
+  sortRepositories(repositories) {
+    return repositories.sort(
+      (r1, r2) =>
+        Math.log10(r2.num_stars) * r2.num_issues -
+        Math.log10(r1.num_stars) * r1.num_issues
+    );
   }
 
   handleLanguageChange = (e, { value }) => {
@@ -172,7 +182,7 @@ class AppContainer extends Component {
             onLanguageChange={this.handleLanguageChange}
           />
           <div className="App-main">
-            <DataTable data={language.repositories} />
+            <DataTable repositories={language.repositories} />
           </div>
         </Responsive>
         <Responsive maxWidth={999} as="div" className="App-container">
