@@ -9,6 +9,7 @@ extern crate log;
 extern crate env_logger;
 
 use std::collections::HashMap;
+use std::collections::HashSet;
 use std::env;
 use std::fs::create_dir_all;
 use std::fs::File;
@@ -246,14 +247,22 @@ impl Repositories {
             }
         };
 
-        let mut repositories = response_data
+        let repositories = response_data
             .search
             .nodes
             .unwrap_or_default()
             .into_iter()
             .filter_map(Repositories::parse_repository)
             .collect::<Vec<_>>();
-        search_object.repositories.append(&mut repositories);
+
+        for repository in repositories {
+            if search_object
+                .seen_repositories
+                .insert(repository.name_with_owner.clone())
+            {
+                search_object.repositories.push(repository);
+            }
+        }
     }
 }
 
@@ -263,6 +272,7 @@ struct SearchObject {
     cursor: Option<String>,
     timeout: f32,
     finished: bool,
+    seen_repositories: HashSet<String>,
 }
 
 fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
@@ -326,6 +336,7 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> Language {
         repositories: vec![],
         timeout: 10.0,
         finished: false,
+        seen_repositories: HashSet::new(),
     };
     let mut len = 0;
     while len < NUM_RETRIES
