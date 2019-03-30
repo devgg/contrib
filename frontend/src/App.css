@@ -110,6 +110,7 @@ i.icon.App-github-icon {
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
+  min-height: 0;
 }
 
 .LanguageDescription-container > * {
@@ -126,6 +127,7 @@ i.icon.App-github-icon {
   flex-grow: 1;
   overflow: auto;
   flex-shrink: 1;
+  min-height: 0;
 }
 
 .App-dropdown.ui.search.dropdown .menu {
