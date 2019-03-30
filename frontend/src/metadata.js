@@ -306,6 +306,18 @@ export default {
     ),
     "https://cdn.worldvectorlogo.com/logos/perl.svg"
   ),
+  php: new LanguageMetadata(
+    "PHP",
+    getDefaultLinks(
+      "php",
+      "php.net",
+      "https://www.php.net/manual/en/",
+      "php",
+      "php",
+      false
+    ),
+    "https://www.php.net/images/logos/new-php-logo.svg"
+  ),
   objectivec: new LanguageMetadata(
     "Objective-C",
     [

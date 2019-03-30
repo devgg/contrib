@@ -35,7 +35,7 @@ fn get_json_response(url: &str) -> Option<serde_json::value::Value> {
 
 fn get_title(language: &str) -> String {
     match language {
-        "cobol" | "ocaml" | "typescript" => String::from(language),
+        "cobol" | "php" | "ocaml" | "typescript" => String::from(language),
         "cpp" => String::from("C%2B%2B"),
         "fsharp" => String::from("f sharp (programming language)"),
         "csharp" => String::from("c sharp (programming language)"),

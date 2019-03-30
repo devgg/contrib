@@ -41,10 +41,11 @@ const NUM_REPOSITORIES_PER_REQUEST: i64 = 50;
 const MIN_NUM_ISSUES: i64 = 10;
 const NUM_REPOSITORIES: usize = 40;
 const NUM_RETRIES: i64 = 100;
-const LANGUAGES: [&str; 27] = [
+const LANGUAGES: [&str; 28] = [
     "c",
     "clojure",
     "cobol",
+    "php",
     "cpp",
     "csharp",
     "erlang",
