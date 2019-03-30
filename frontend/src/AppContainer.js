@@ -195,7 +195,7 @@ class AppContainer extends Component {
             <GitHubLink />
           </div>
           <div className="App-main">
-            <DataTable data={language.repositories} />
+            <DataTable repositories={language.repositories} />
           </div>
         </Responsive>
       </React.Fragment>
