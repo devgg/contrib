@@ -146,7 +146,11 @@ class Repository extends Component {
       <Segment>
         <Responsive minWidth={1000}>
           <div className="Repository-container">
-            <Image src={this.props.avatar_url} size="tiny" />
+            <Image
+              src={this.props.avatar_url}
+              size="tiny"
+              alt={"github avatar of " + this.props.name_with_owner}
+            />
             <Stats
               num_stars={this.props.num_stars}
               num_forks={this.props.num_forks}
@@ -165,7 +169,11 @@ class Repository extends Component {
         <Responsive maxWidth={999}>
           <div className="Repository-container">
             <div className="Repository-header">
-              <Image src={this.props.avatar_url} size="tiny" />
+              <Image
+                src={this.props.avatar_url}
+                size="tiny"
+                alt={"github avatar of " + this.props.name_with_owner}
+              />
               <Stats
                 num_stars={this.props.num_stars}
                 num_forks={this.props.num_forks}

@@ -36,6 +36,7 @@ class Navigation extends Component {
 
 class SocialButton extends Component {
   render() {
+    const linkName = this.props.displayName + " on " + this.props.name;
     return (
       <Popup
         on="hover"
@@ -47,6 +48,7 @@ class SocialButton extends Component {
             target="_blank"
             rel="noopener noreferrer"
             href={this.props.url}
+            aria-label={linkName}
           >
             <Button.Content visible>
               <Icon name={this.props.icon} />
@@ -58,7 +60,7 @@ class SocialButton extends Component {
         }
       >
         <Popup.Content>
-          {this.props.displayName + " on " + this.props.name}
+          {linkName}
         </Popup.Content>
       </Popup>
     );
@@ -89,6 +91,7 @@ class LanguageDescription extends Component {
         <Image
           className="LanguageDescription-image"
           src={this.props.image_url}
+          alt={"logo of the " + this.props.displayName + " programming language"}
         />
         <div
           className="LanguageDescription-text"
