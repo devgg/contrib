@@ -253,6 +253,18 @@ export default {
     ),
     "https://upload.wikimedia.org/wikipedia/commons/7/73/Ruby_logo.svg"
   ),
+  elixir: new LanguageMetadata(
+    "Elixir",
+    getDefaultLinks(
+      "elixir",
+      "elixir-lang.org",
+      "https://elixir-lang.org/docs.html",
+      "elixir",
+      "elixir",
+      false
+    ),
+    "https://elixir-lang.org/images/logo/logo.png"
+  ),
   erlang: new LanguageMetadata("Erlang", [
     getReferenceLink("erlang.org", "https://www.erlang.org/docs"),
     getStackOverflowLink("erlang"),

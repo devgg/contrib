@@ -37,6 +37,7 @@ fn get_title(language: &str) -> String {
     match language {
         "cobol" | "php" | "ocaml" | "typescript" => String::from(language),
         "cpp" => String::from("C%2B%2B"),
+        "elixir" => String::from("elixir (programming language)"),
         "fsharp" => String::from("f sharp (programming language)"),
         "csharp" => String::from("c sharp (programming language)"),
         "objectivec" => String::from("Objective-C"),
