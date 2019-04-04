@@ -260,8 +260,7 @@ export default {
       "elixir-lang.org",
       "https://elixir-lang.org/docs.html",
       "elixir",
-      "elixir",
-      false
+      "elixir"
     ),
     "https://elixir-lang.org/images/logo/logo.png"
   ),
