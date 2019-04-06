@@ -110,7 +110,7 @@ impl Repositories {
         language: &str,
         cursor: Option<String>,
     ) -> impl serde::ser::Serialize {
-        let query = "language:".to_string() + language + " stars:>=500 is:public archived:false";
+        let query = "language:".to_string() + language + " stars:>=200 is:public archived:false";
         Repositories::build_query(repositories::Variables {
             num_results,
             query,
