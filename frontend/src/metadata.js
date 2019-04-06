@@ -295,6 +295,17 @@ export default {
     ],
     "https://cacm.acm.org/system/assets/0003/2653/092618_Kackr.io_Cobol.large.jpg?1537981861&1537981860"
   ),
+  dart: new LanguageMetadata(
+    "Dart",
+    getDefaultLinks(
+      "dart",
+      "dartlang.org",
+      "https://www.dartlang.org/guides/get-started",
+      "dart",
+      "dart"
+    ),
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Dart_programming_language_logo.svg/2880px-Dart_programming_language_logo.svg.png"
+  ),
   matlab: new LanguageMetadata(
     "MATLAB",
     getDefaultLinks(

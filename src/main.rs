@@ -42,10 +42,11 @@ const NUM_REPOSITORIES_PER_REQUEST: i64 = 50;
 const MIN_NUM_ISSUES: i64 = 10;
 const NUM_REPOSITORIES: usize = 40;
 const NUM_RETRIES: i64 = 100;
-const LANGUAGES: [&str; 29] = [
+const LANGUAGES: [&str; 30] = [
     "c",
     "clojure",
     "cobol",
+    "dart",
     "php",
     "cpp",
     "csharp",
@@ -335,7 +336,7 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> Language {
         cursor: None,
         language: language.name.clone(),
         repositories: vec![],
-        timeout: 10.0,
+        timeout: 15.0,
         finished: false,
         seen_repositories: HashSet::new(),
     };
