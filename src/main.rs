@@ -282,8 +282,8 @@ struct SearchObject {
 fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
     // Sleeping with exponential backoff so we do not make GitHub angry.
     let mut rng = rand::thread_rng();
-    let timeout = rng.gen_range(search_object.timeout / 2.0, search_object.timeout * 1.5);
-    thread::sleep(time::Duration::from_secs(timeout as u64));
+    let timeout = rng.gen_range(0, (search_object.timeout as u64) * 2);
+    thread::sleep(time::Duration::from_secs(timeout));
 
     let q = Repositories::create_query(
         NUM_REPOSITORIES_PER_REQUEST,
@@ -312,6 +312,7 @@ fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
         }
         return;
     }
+    search_object.timeout = search_object.timeout.powf(0.8).max(1.1);
 
     let response_body: Response<repositories::ResponseData> = match res.json() {
         Ok(res) => res,
@@ -340,7 +341,7 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> Language {
         cursor: None,
         language: language.name.clone(),
         repositories: vec![],
-        timeout: 15.0,
+        timeout: 30.0,
         finished: false,
         seen_repositories: HashSet::new(),
     };
