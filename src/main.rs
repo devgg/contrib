@@ -7,7 +7,9 @@ use graphql_client::*;
 #[macro_use]
 extern crate log;
 extern crate env_logger;
+extern crate rand;
 
+use rand::Rng;
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::env;
@@ -279,7 +281,9 @@ struct SearchObject {
 
 fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
     // Sleeping with exponential backoff so we do not make GitHub angry.
-    thread::sleep(time::Duration::from_secs(search_object.timeout as u64));
+    let mut rng = rand::thread_rng();
+    let timeout = rng.gen_range(search_object.timeout / 2.0, search_object.timeout * 1.5);
+    thread::sleep(time::Duration::from_secs(timeout as u64));
 
     let q = Repositories::create_query(
         NUM_REPOSITORIES_PER_REQUEST,
