@@ -24,6 +24,14 @@
   flex-direction: column;
 }
 
+.Description-container > .Labels-container {
+  flex-direction: row;
+}
+
+.Description-container .Label-container {
+  margin-right: 10px;
+}
+
 .Label-container {
   margin: 4px 0;
 }

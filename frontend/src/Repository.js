@@ -93,14 +93,6 @@ class Stats extends Component {
 
 class Description extends Component {
   render() {
-    let num_topics = 0;
-    let topics_char_count = 0;
-    for (; num_topics < this.props.topics.length; ++num_topics) {
-      topics_char_count += this.props.topics[num_topics].name.length;
-      if (topics_char_count >= 60) {
-        break;
-      }
-    }
     return (
       <div className="Description-container">
         <a
@@ -119,22 +111,12 @@ class Description extends Component {
           {this.props.name_with_owner}
         </a>
         <div className="Description-text">{this.props.description}</div>
-        <div className="Repository-topics">
-          {this.props.topics.slice(0, num_topics).map(topic => {
-            return (
-              <Label
-                key={topic.name}
-                className="Repository-topic"
-                as="a"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={topic.url}
-              >
-                {topic.name}
-              </Label>
-            );
-          })}
-        </div>
+        {this.props.add_labels && (
+          <Labels
+            labels={this.props.labels}
+            num_issues={this.props.num_issues}
+          />
+        )}
       </div>
     );
   }
@@ -162,7 +144,8 @@ class Repository extends Component {
               url={this.props.url}
               description={this.props.description}
               labels={this.props.labels}
-              topics={this.props.topics}
+              num_issues={this.props.num_issues}
+              add_labels={true}
             />
           </div>
         </Responsive>
@@ -190,7 +173,8 @@ class Repository extends Component {
               url={this.props.url}
               description={this.props.description}
               labels={this.props.labels}
-              topics={[]}
+              num_issues={this.props.num_issues}
+              add_labels={false}
             />
           </div>
         </Responsive>
