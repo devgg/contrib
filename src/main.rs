@@ -170,20 +170,6 @@ impl Repositories {
             })
             .collect::<Vec<_>>();
 
-        let topics = repo
-            .repository_topics
-            .nodes
-            .unwrap_or_default()
-            .into_iter()
-            .map(|topic| -> Topic {
-                let topic = topic.expect("");
-                Topic {
-                    name: topic.topic.name,
-                    url: topic.url,
-                }
-            })
-            .collect::<Vec<_>>();
-
         let mut labels: HashMap<String, Label> =
             HashMap::from_iter(LABELS.iter().cloned().map(|label| {
                 (
@@ -229,7 +215,6 @@ impl Repositories {
             num_issues: repo.issues.total_count,
             num_pull_requests: repo.pull_requests.total_count,
             num_stars: repo.stargazers.total_count,
-            topics,
             labels,
             issues: vec![],
             languages,

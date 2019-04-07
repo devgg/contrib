@@ -23,7 +23,6 @@ class DataTable extends Component {
           num_forks={-1}
           num_issues={-1}
           description="Looks like we could not find any relevant open source projects."
-          topics={[]}
         />
       );
     }

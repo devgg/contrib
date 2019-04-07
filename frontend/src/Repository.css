@@ -65,23 +65,6 @@
   overflow: hidden;
 }
 
-.Repository-topics {
-  display: flex;
-  overflow: hidden;
-}
-
-.ui.label.Repository-topic {
-  background-color: #f1f8ff;
-  color: #0366d6;
-  white-space: nowrap;
-  flex-wrap: wrap;
-}
-
-.ui.label.Repository-topic:hover {
-  background-color: #def;
-  color: #0366d6;
-}
-
 @media screen and (min-width: 1000px) {
   .Repository-container {
     min-width: 650px;

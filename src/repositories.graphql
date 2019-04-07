@@ -52,14 +52,6 @@ query Repositories(
         stargazers {
           totalCount
         }
-        repositoryTopics(first: 5) {
-          nodes {
-            url
-            topic {
-              name
-            }
-          }
-        }
       }
     }
   }

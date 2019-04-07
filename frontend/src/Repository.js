@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Repository.css";
-import { Icon, Label, Image, Responsive } from "semantic-ui-react";
+import { Icon, Image, Responsive } from "semantic-ui-react";
 import tinycolor from "tinycolor2";
 
 import { Popup, Segment } from "semantic-ui-react";

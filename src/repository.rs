@@ -24,7 +24,6 @@ pub struct Repository {
     pub num_issues: i64,
     pub num_pull_requests: i64,
     pub num_stars: i64,
-    pub topics: Vec<Topic>,
     pub labels: Vec<Label>,
     pub issues: Vec<Vec<String>>,
     pub languages: Vec<String>,
