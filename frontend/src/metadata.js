@@ -156,8 +156,7 @@ export default {
       "https://kotlinlang.org/docs/reference/",
       "kotlin",
       "kotlin"
-    ),
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Kotlin-logo.svg/1920px-Kotlin-logo.svg"
+    )
   ),
   go: new LanguageMetadata(
     "Go",
