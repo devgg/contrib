@@ -143,7 +143,7 @@ export default {
       "typescriptlang.org",
       "https://www.typescriptlang.org/docs/home.html",
       "typescript",
-      "typescript",
+      "TypeScript",
       false
     ),
     "https://cdn-images-1.medium.com/max/2000/1*mn6bOs7s6Qbao15PMNRyOA.png"
