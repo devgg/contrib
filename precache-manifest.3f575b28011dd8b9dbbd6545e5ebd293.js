@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "7ca1f291b4547687b309",
+    "revision": "48aba8acb85897a6d980",
     "url": "/contrib/static/css/main.a79c4400.chunk.css"
   },
   {
-    "revision": "7ca1f291b4547687b309",
-    "url": "/contrib/static/js/main.7ca1f291.chunk.js"
+    "revision": "48aba8acb85897a6d980",
+    "url": "/contrib/static/js/main.48aba8ac.chunk.js"
   },
   {
     "revision": "452d1390efa3e135611a",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/contrib/static/js/2.2250e550.chunk.js"
   },
   {
-    "revision": "cfafa498acf45206ff271e34694b354c",
+    "revision": "7dc4e6fbf503d3e8f9ced0ab00e35650",
     "url": "/contrib/index.html"
   }
 ];
