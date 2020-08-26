@@ -14,10 +14,6 @@ import data from "./generated/data.json";
 import metadata from "./metadata.js";
 
 class Navigation extends Component {
-  shouldComponentUpdate(nextProps) {
-    return false;
-  }
-
   render() {
     return (
       <Dropdown
@@ -26,7 +22,7 @@ class Navigation extends Component {
         fluid
         search
         selection
-        defaultValue={this.props.default}
+        value={this.props.language}
         options={this.props.options}
         onChange={this.props.onLanguageChange}
       />
@@ -59,9 +55,7 @@ class SocialButton extends Component {
           </Button>
         }
       >
-        <Popup.Content>
-          {linkName}
-        </Popup.Content>
+        <Popup.Content>{linkName}</Popup.Content>
       </Popup>
     );
   }
@@ -91,7 +85,9 @@ class LanguageDescription extends Component {
         <Image
           className="LanguageDescription-image"
           src={this.props.image_url}
-          alt={"logo of the " + this.props.displayName + " programming language"}
+          alt={
+            "logo of the " + this.props.displayName + " programming language"
+          }
         />
         <div
           className="LanguageDescription-text"
@@ -120,7 +116,7 @@ class Controls extends Component {
       <Segment className="App-controls">
         <Navigation
           options={this.props.options}
-          default={this.props.language.name}
+          language={this.props.language.name}
           onLanguageChange={this.props.onLanguageChange}
         />
         <LanguageDescription {...this.props.language} />
@@ -192,7 +188,7 @@ class AppContainer extends Component {
           <div className="App-mobile-header">
             <Navigation
               options={this.options}
-              default={language.name}
+              language={language.name}
               onLanguageChange={this.handleLanguageChange}
             />
             <GitHubLink />
