@@ -81,7 +81,7 @@ export default {
       "csharp",
       "c_sharp"
     ),
-    "https://vedcomputech.com/images/Training/csharp.svg"
+    "https://upload.wikimedia.org/wikipedia/commons/7/7a/C_Sharp_logo.svg"
   ),
   cpp: new LanguageMetadata(
     "C++",
@@ -156,7 +156,8 @@ export default {
       "https://kotlinlang.org/docs/reference/",
       "kotlin",
       "kotlin"
-    )
+    ),
+    "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin-logo.svg"
   ),
   go: new LanguageMetadata(
     "Go",
@@ -218,7 +219,8 @@ export default {
       "https://www.haskell.org/documentation/",
       "haskell",
       "haskell"
-    )
+    ),
+    "https://upload.wikimedia.org/wikipedia/commons/1/1c/Haskell-Logo.svg"
   ),
   julia: new LanguageMetadata(
     "Julia",
@@ -268,11 +270,15 @@ export default {
     getStackOverflowLink("erlang"),
     getWikipediaLink("erlang")
   ]),
-  hack: new LanguageMetadata("Hack", [
-    getReferenceLink("hhvm.com", "https://docs.hhvm.com/hack/"),
-    getStackOverflowLink("hacklang"),
-    getWikipediaLink("hack")
-  ]),
+  hack: new LanguageMetadata(
+    "Hack",
+    [
+      getReferenceLink("hhvm.com", "https://docs.hhvm.com/hack/"),
+      getStackOverflowLink("hacklang"),
+      getWikipediaLink("hack")
+    ],
+    "https://upload.wikimedia.org/wikipedia/commons/a/a7/Hack_(programming_language)_logo.svg"
+  ),
   ocaml: new LanguageMetadata(
     "OCaml",
     getDefaultLinks(
