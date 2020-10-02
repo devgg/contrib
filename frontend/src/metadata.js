@@ -30,8 +30,8 @@ function getWikipediaLink(language, suffix = true) {
   return new LanguageLinks(
     "wikipedia.org",
     "https://en.wikipedia.org/wiki/" +
-      language +
-      (suffix ? "_(programming_language)" : ""),
+    language +
+    (suffix ? "_(programming_language)" : ""),
     "wikipedia w"
   );
 }
@@ -60,7 +60,7 @@ class LanguageMetadata {
   }
 }
 
-export default {
+let obj = {
   c: new LanguageMetadata(
     "C",
     getDefaultLinks(
@@ -376,3 +376,5 @@ export default {
     getWikipediaLink("groovy")
   ])
 };
+
+export default obj;
