@@ -1,5 +1,4 @@
-# [contrib](http://gauger.io/contrib)
-
+suraj singh say that this community is amazing
 [![Build Status](https://travis-ci.com/devgg/contrib.svg?branch=master)](https://travis-ci.com/devgg/contrib)
 ![License](https://img.shields.io/github/license/devgg/contrib.svg)
 
