@@ -10,7 +10,7 @@ jobs:
         with:
           toolchain: stable
       - name: run rust 🛎️
-        run: RUST_BACKTRACE=1 RUST_LOG="contrib=info" cargo run
+        run: RUST_BACKTRACE=1 RUST_LOG="contrib=info" GITHUB_GRAPHQL_TOKEN=${{secrets.GH_GRAPHQL_TOKEN}} cargo run
       - name: install & build 🔧
         run: |
           cd frontend
