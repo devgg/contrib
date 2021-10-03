@@ -25,7 +25,6 @@ mod wikipedia;
 use repository::Label;
 use repository::Language;
 use repository::Repository;
-use repository::Topic;
 
 type URI = String;
 
@@ -117,7 +116,7 @@ impl Repositories {
             num_results,
             query,
             cursor,
-            labels: LABELS.into_iter().map(ToString::to_string).collect(),
+            labels: LABELS.iter().map(ToString::to_string).collect(),
             num_languages: NUM_LANGUAGES,
             avatar_size: AVATAR_SIZE,
         })
@@ -291,7 +290,11 @@ fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
     };
 
     if res.status() != 200 {
-        error!("Status: {}", res.status());
+        error!(
+            "Status: {}, {}",
+            res.status(),
+            res.text().unwrap_or_default()
+        );
         if res.status() == 403 {
             search_object.timeout = search_object.timeout.powf(1.2).max(1.1);
         }
@@ -359,7 +362,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     let (tx, rx) = mpsc::channel();
-    LANGUAGES.into_iter().for_each(|language| {
+    LANGUAGES.iter().for_each(|language| {
         let tx = mpsc::Sender::clone(&tx);
         let gh_token = gh_token.clone();
         let language = Language {
