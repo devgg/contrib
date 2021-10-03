@@ -329,7 +329,7 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> Language {
         cursor: None,
         language: language.name.clone(),
         repositories: vec![],
-        timeout: 30.0,
+        timeout: 60.0,
         finished: false,
         seen_repositories: HashSet::new(),
     };
