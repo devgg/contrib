@@ -1,0 +1,23 @@
+name: build & deploy
+on: [push]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: run rust 🛎️
+        run: RUST_BACKTRACE=1 RUST_LOG="contrib=info" cargo run
+      - name: install & build 🔧
+        run: |
+          cd frontend
+          npm install
+          npm run build:prod
+      - name: deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: frontend/build
