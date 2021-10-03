@@ -1,5 +1,8 @@
 name: build & deploy
-on: [push]
+on: 
+  push:
+  schedule:
+    - cron:  '0 6 * * *' # runs at 06:00 UTC every day
 
 jobs:
   build-and-deploy:
