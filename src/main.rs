@@ -39,7 +39,7 @@ pub struct Repositories;
 const GITHUB_API_URL: &str = "https://api.github.com/graphql";
 const NUM_LANGUAGES: i64 = 10;
 const AVATAR_SIZE: i64 = 80;
-const NUM_REPOSITORIES_PER_REQUEST: i64 = 50;
+const NUM_REPOSITORIES_PER_REQUEST: i64 = 20;
 const MIN_NUM_ISSUES: i64 = 10;
 const NUM_REPOSITORIES: usize = 40;
 const NUM_RETRIES: i64 = 100;
@@ -197,6 +197,11 @@ impl Repositories {
             .collect();
         labels.sort_by(|a, b| b.count.cmp(&a.count));
 
+        if labels.is_empty() {
+            debug!("No label");
+            return None;
+        }
+
         let avatar_url = match repo.owner.on {
             repositories::RepositoriesSearchNodesOnRepositoryOwnerOn::User(user) => user.avatar_url,
             repositories::RepositoriesSearchNodesOnRepositoryOwnerOn::Organization(
@@ -289,17 +294,18 @@ fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
         }
     };
 
-    if res.status() != 200 {
+    if res.status() != reqwest::StatusCode::OK {
         error!(
             "Status: {}, {}",
             res.status(),
             res.text().unwrap_or_default()
         );
-        if res.status() == 403 {
+        if res.status() == reqwest::StatusCode::FORBIDDEN {
             search_object.timeout = search_object.timeout.powf(1.2).max(1.1);
         }
         return;
     }
+
     search_object.timeout = search_object.timeout.powf(0.8).max(1.1);
 
     let response_body: Response<repositories::ResponseData> = match res.json() {
