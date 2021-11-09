@@ -7,7 +7,7 @@ import {
   Icon,
   Image,
   Popup,
-  Segment
+  Segment,
 } from "semantic-ui-react";
 import DataTable from "./DataTable.js";
 import data from "./generated/data.json";
@@ -94,7 +94,7 @@ class LanguageDescription extends Component {
           dangerouslySetInnerHTML={{ __html: this.props.summary_html }}
         />
         <div className="App-social">
-          {this.props.links.map(link => {
+          {this.props.links.map((link) => {
             return (
               <SocialButton
                 key={link.name}
@@ -128,7 +128,7 @@ class Controls extends Component {
 class AppContainer extends Component {
   options = [];
   index = {
-    language: {}
+    language: {},
   };
 
   constructor() {
@@ -151,7 +151,7 @@ class AppContainer extends Component {
       this.options.push({
         key: data[language].name,
         value: data[language].name,
-        text: data[language].displayName
+        text: data[language].displayName,
       });
     }
   }

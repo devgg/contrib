@@ -41,7 +41,7 @@ class Labels extends Component {
 
     return (
       <div className="Labels-container">
-        {this.props.labels.map(label => {
+        {this.props.labels.map((label) => {
           return (
             <div className="Label-container" key={label.name}>
               <span
@@ -51,7 +51,7 @@ class Labels extends Component {
                     tinycolor(label.color).getBrightness() > 128
                       ? "black"
                       : "white",
-                  backgroundColor: "#" + label.color
+                  backgroundColor: "#" + label.color,
                 }}
               >
                 {label.name}
@@ -93,6 +93,10 @@ class Stats extends Component {
 
 class Description extends Component {
   render() {
+    const label_tag =
+      this.props.labels.length > 0 && this.props.labels.length[0]
+        ? this.props.labels.length[0].name
+        : "";
     return (
       <div className="Description-container">
         <a
@@ -103,7 +107,7 @@ class Description extends Component {
             this.props.url != null
               ? this.props.url +
                 '/issues?q=is:open is:issue label:"' +
-                this.props.labels[0].name +
+                label_tag +
                 '"'
               : "https://media.giphy.com/media/fhLgA6nJec3Cw/giphy.gif"
           }
