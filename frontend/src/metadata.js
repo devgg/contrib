@@ -220,7 +220,7 @@ export default {
       "haskell",
       "haskell"
     ),
-    "https://upload.wikimedia.org/wikipedia/commons/1/1c/Haskell-Logo.svg"
+    "https://upload.wikimedia.org/wikipedia/en/4/4d/Logo_of_the_Haskell_programming_language.svg"
   ),
   julia: new LanguageMetadata(
     "Julia",

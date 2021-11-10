@@ -118,8 +118,8 @@ i.icon.App-github-icon {
 }
 
 .LanguageDescription-image {
-  width: 100%;
-  max-height: 300px;
+  min-width: 60%;
+  max-height: 200px;
   margin: 10px 0;
 }
 
