@@ -48,7 +48,7 @@ function getDefaultLinks(
     getGitHubLink(githubLanguage),
     getReferenceLink(referenceName, referenceUrl),
     getStackOverflowLink(getStackOverflowLanguage),
-    getWikipediaLink(wikipedaLanguage, wikipediaSuffix)
+    getWikipediaLink(wikipedaLanguage, wikipediaSuffix),
   ];
 }
 
@@ -81,7 +81,7 @@ export default {
       "csharp",
       "c_sharp"
     ),
-    "https://upload.wikimedia.org/wikipedia/commons/7/7a/C_Sharp_logo.svg"
+    "https://upload.wikimedia.org/wikipedia/commons/0/0d/C_Sharp_wordmark.svg"
   ),
   cpp: new LanguageMetadata(
     "C++",
@@ -102,7 +102,7 @@ export default {
       "java",
       "java"
     ),
-    "https://www.softexia.com/wp-content/uploads/2017/04/Java-logo.png"
+    "https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg"
   ),
   javascript: new LanguageMetadata(
     "JavaScript",
@@ -157,7 +157,7 @@ export default {
       "kotlin",
       "kotlin"
     ),
-    "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin-logo.svg"
+    "https://upload.wikimedia.org/wikipedia/commons/1/11/Kotlin_logo_2021.svg"
   ),
   go: new LanguageMetadata(
     "Go",
@@ -268,14 +268,14 @@ export default {
   erlang: new LanguageMetadata("Erlang", [
     getReferenceLink("erlang.org", "https://www.erlang.org/docs"),
     getStackOverflowLink("erlang"),
-    getWikipediaLink("erlang")
+    getWikipediaLink("erlang"),
   ]),
   hack: new LanguageMetadata(
     "Hack",
     [
       getReferenceLink("hhvm.com", "https://docs.hhvm.com/hack/"),
       getStackOverflowLink("hacklang"),
-      getWikipediaLink("hack")
+      getWikipediaLink("hack"),
     ],
     "https://upload.wikimedia.org/wikipedia/commons/a/a7/Hack_(programming_language)_logo.svg"
   ),
@@ -296,7 +296,7 @@ export default {
     [
       getReferenceLink("sourceforge.io", "https://open-cobol.sourceforge.io/"),
       getStackOverflowLink("cobol"),
-      getWikipediaLink("cobol", false)
+      getWikipediaLink("cobol", false),
     ],
     "https://cacm.acm.org/system/assets/0003/2653/092618_Kackr.io_Cobol.large.jpg?1537981861&1537981860"
   ),
@@ -353,7 +353,7 @@ export default {
         "https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html"
       ),
       getStackOverflowLink("objective-c"),
-      getWikipediaLink("objective-c", false)
+      getWikipediaLink("objective-c", false),
     ],
     "https://seeklogo.com/images/O/objective-c-logo-81746870EF-seeklogo.com.png"
   ),
@@ -373,6 +373,6 @@ export default {
       "http://groovy-lang.org/documentation.html"
     ),
     getStackOverflowLink("groovy"),
-    getWikipediaLink("groovy")
-  ])
+    getWikipediaLink("groovy"),
+  ]),
 };
