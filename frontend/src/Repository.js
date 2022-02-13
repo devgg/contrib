@@ -93,10 +93,7 @@ class Stats extends Component {
 
 class Description extends Component {
   render() {
-    const label_tag =
-      this.props.labels.length > 0 && this.props.labels.length[0]
-        ? this.props.labels.length[0].name
-        : "";
+    const label_tag = this.props.labels.map((l) => `"${l.name}"`).join();
     return (
       <div className="Description-container">
         <a
@@ -105,10 +102,7 @@ class Description extends Component {
           rel="noopener noreferrer"
           href={
             this.props.url != null
-              ? this.props.url +
-                '/issues?q=is:open is:issue label:"' +
-                label_tag +
-                '"'
+              ? this.props.url + "/issues?q=is:open is:issue label:" + label_tag
               : "https://media.giphy.com/media/fhLgA6nJec3Cw/giphy.gif"
           }
         >
