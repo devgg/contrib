@@ -1,6 +1,7 @@
 name: build & deploy
 on: 
   push:
+  workflow_dispatch:
   schedule:
     - cron:  '0 6 * * *' # runs at 06:00 UTC every day
 
