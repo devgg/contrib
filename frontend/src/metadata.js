@@ -60,7 +60,7 @@ class LanguageMetadata {
   }
 }
 
-export default {
+const metadataMap = {
   c: new LanguageMetadata(
     "C",
     getDefaultLinks(
@@ -376,3 +376,5 @@ export default {
     getWikipediaLink("groovy"),
   ]),
 };
+
+export default metadataMap;
