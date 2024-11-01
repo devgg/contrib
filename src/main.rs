@@ -264,11 +264,74 @@ struct SearchObject {
     repositories: Vec<Repository>,
     cursor: Option<String>,
     timeout: f32,
+    timeout_fixed: u64,
     finished: bool,
     seen_repositories: HashSet<String>,
 }
 
+fn maybe_get_timeout_fixed(response: &reqwest::Response) -> Option<u64> {
+    let headers = response.headers();
+
+    let retry_after = match headers.get_all(reqwest::header::RETRY_AFTER).iter().next() {
+        Some(h) => match h.to_str() {
+            Ok(h) => match h.parse::<u64>() {
+                Ok(h) => h,
+                Err(_) => 0,
+            },
+            Err(_) => 0,
+        },
+        None => 0,
+    };
+    let rate_remaining = match headers.get_all("x-ratelimit-remaining").iter().next() {
+        Some(h) => match h.to_str() {
+            Ok(h) => match h.parse::<u64>() {
+                Ok(h) => h,
+                Err(_) => 0,
+            },
+            Err(_) => 0,
+        },
+        None => 0,
+    };
+    let rate_reset = match headers.get_all("x-ratelimit-reset").iter().next() {
+        Some(h) => match h.to_str() {
+            Ok(h) => match h.parse::<u64>() {
+                Ok(h) => h,
+                Err(_) => 0,
+            },
+            Err(_) => 0,
+        },
+        None => 0,
+    };
+
+    if rate_remaining == 0 && rate_reset > 0 {
+        let rate_reset_time = std::time::Duration::from_secs(rate_reset)
+            .saturating_sub(
+                std::time::SystemTime::now()
+                    .duration_since(std::time::SystemTime::UNIX_EPOCH)
+                    .unwrap(),
+            )
+            .as_secs();
+
+        println!("{}: {:?}", "rate_remaining", rate_remaining);
+        println!("{}: {:?}", "rate_reset", rate_reset);
+        println!("{}: {:?}", "rate_reset_time", rate_reset_time);
+
+        return Some(rate_reset_time);
+    }
+    if retry_after > 0 {
+        println!("{}: {:?}", "retry_after", retry_after);
+        return Some(retry_after);
+    }
+
+    return None;
+}
+
 fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
+    if search_object.timeout_fixed > 0 {
+        thread::sleep(time::Duration::from_secs(search_object.timeout_fixed));
+        search_object.timeout_fixed = 0
+    }
+
     // Sleeping with exponential backoff so we do not make GitHub angry.
     let mut rng = rand::thread_rng();
     let timeout = rng.gen_range(0, (search_object.timeout as u64) * 2);
@@ -293,6 +356,16 @@ fn get_repositories(mut search_object: &mut SearchObject, gh_token: &str) {
             return;
         }
     };
+
+    match maybe_get_timeout_fixed(&res) {
+        Some(timeout_fixed) => {
+            search_object.timeout_fixed = timeout_fixed;
+            return;
+        }
+        None => (),
+    }
+
+    search_object.timeout = search_object.timeout.powf(0.8).max(1.1);
 
     if res.status() != reqwest::StatusCode::OK {
         error!(
@@ -335,7 +408,8 @@ fn get_all_repositories(mut language: Language, gh_token: String) -> Language {
         cursor: None,
         language: language.name.clone(),
         repositories: vec![],
-        timeout: 60.0,
+        timeout: 1.0,
+        timeout_fixed: 0,
         finished: false,
         seen_repositories: HashSet::new(),
     };
